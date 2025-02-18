@@ -2,60 +2,38 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float moveSpeed = 5f; // speed of movement
-    [SerializeField] private float jumpForce = 0f; // Ensures jumpForce appears in the Inspector
-    private Rigidbody2D rb;
-    private Vector2 moveInput; 
-    private bool isGrounded;
+    private float horizontal;
+    private float speed = 8f;
+    private float jumpPower = 30f;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        rb = GetComponent<Rigidbody2D>(); //Gets the 2d rigid body component
-    }
+    [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private LayerMask groundLayer;
+
 
     // Update is called once per frame
     void Update()
     {
-        moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), 0);
+        horizontal = Input.GetAxisRaw("Horizontal");
 
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        if(Input.GetKeyDown(KeyCode.Space) && IsGrounded())
         {
-            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse); // Applies the jump force
-            isGrounded = false; // Prevents multiple jumps
-            print("I am jumping");
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPower);
+        }
+
+        if(Input.GetKeyDown("Space") && rb.linearVelocity.y > 0f)
+        {
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.5f);
         }
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        Vector2 newPosition = rb.position + moveInput * moveSpeed * Time.fixedDeltaTime;
-        rb.MovePosition(newPosition);
+        rb.linearVelocity = new Vector2(horizontal * speed, rb.linearVelocity.y);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private bool IsGrounded()
     {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = true; // Sets isGrounded to true when touching the ground
-            print("Touching the ground");
-        }
-    }
-
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = true; // Ensures the player remains grounded while touching the ground
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = false; // Sets isGrounded to false when leaving the ground
-            print("Not touching the ground");
-        }
+        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
     }
 }
