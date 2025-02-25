@@ -8,7 +8,7 @@ public class LaserDamage : MonoBehaviour
     {
         if(collider.gameObject == player)
         {
-            Debug.Log("Hit player");
+            Debug.Log("OW!");
         }
     }
 }
