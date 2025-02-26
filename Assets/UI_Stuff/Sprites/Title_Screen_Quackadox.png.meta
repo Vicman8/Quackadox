@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Title_Screen_Quackadox_0: -4242393554894856032
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
