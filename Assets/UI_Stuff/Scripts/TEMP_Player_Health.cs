@@ -14,6 +14,8 @@ public class TEMP_Player_Health : MonoBehaviour
     public Image Heart4;
     public Image Heart5;
 
+    public Sprite dHeatlh;
+
 
     public GameObject Death_Screen;
 
@@ -29,9 +31,6 @@ public class TEMP_Player_Health : MonoBehaviour
     }
     public void Update()
     {
-
-
-
         if (health <= 0)
         {
             Death_Screen.SetActive(true);
@@ -41,7 +40,7 @@ public class TEMP_Player_Health : MonoBehaviour
 
     public void Damaged()
     {
-        T_Health[health - 1].sprite = null;
+        T_Health[health - 1].sprite = dHeatlh;
         health -= 1;
         Debug.Log(health);
     }
