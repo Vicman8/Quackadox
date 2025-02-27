@@ -27,12 +27,14 @@ public class UI_Controls : MonoBehaviour
     public void Paused()
     {
         PauseMenu.SetActive(true);
+        Time.timeScale = 0;
         IsPaused = true;
     }
 
     public void Continue()
     {
         PauseMenu.SetActive(false);
+        Time.timeScale = 1;
         IsPaused = false;
     }
 
