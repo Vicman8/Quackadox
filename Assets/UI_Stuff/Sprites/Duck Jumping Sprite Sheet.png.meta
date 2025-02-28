@@ -1,10 +1,19 @@
 fileFormatVersion: 2
-guid: fe30e066c9ce79647a4c8677735ec910
+guid: 42e0c6c5efd7b3b4a99f269991ac7bdc
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6524517629087480824
-    second: Duck_0
+      213: 3691317930484669671
+    second: Duck Jumping Sprite Sheet_0
+  - first:
+      213: 6470979672068295412
+    second: Duck Jumping Sprite Sheet_1
+  - first:
+      213: -3659425227853263504
+    second: Duck Jumping Sprite Sheet_2
+  - first:
+      213: 693444099725954769
+    second: Duck Jumping Sprite Sheet_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +109,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Duck_0
+      name: Duck Jumping Sprite Sheet_0
       rect:
         serializedVersion: 2
-        x: 48
-        y: 34
-        width: 142
-        height: 156
+        x: 6
+        y: 4
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +124,74 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8048773e8c14475a0800000000000000
-      internalID: -6524517629087480824
+      spriteID: 7ec919fa9123a3330800000000000000
+      internalID: 3691317930484669671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Duck Jumping Sprite Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 5
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4fa876e1ab98dc950800000000000000
+      internalID: 6470979672068295412
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Duck Jumping Sprite Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 6
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 07d04bbc42c173dc0800000000000000
+      internalID: -3659425227853263504
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Duck Jumping Sprite Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 6
+        width: 23
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1de81c31cbb9f9900800000000000000
+      internalID: 693444099725954769
       vertices: []
       indices: 
       edges: []
@@ -135,7 +210,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Duck_0: -6524517629087480824
+      Duck Jumping Sprite Sheet_0: 3691317930484669671
+      Duck Jumping Sprite Sheet_1: 6470979672068295412
+      Duck Jumping Sprite Sheet_2: -3659425227853263504
+      Duck Jumping Sprite Sheet_3: 693444099725954769
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

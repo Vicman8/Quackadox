@@ -1,10 +1,19 @@
 fileFormatVersion: 2
-guid: fe30e066c9ce79647a4c8677735ec910
+guid: 4f1cde7f920f1ba4cae68f1052463e2b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6524517629087480824
-    second: Duck_0
+      213: -5747625064548731867
+    second: Duck_Idle_Sprite_Sheet_0
+  - first:
+      213: 3255974359205532222
+    second: Duck_Idle_Sprite_Sheet_1
+  - first:
+      213: -9060086522549327782
+    second: Duck_Idle_Sprite_Sheet_2
+  - first:
+      213: 7067491075281098578
+    second: Duck_Idle_Sprite_Sheet_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,23 +109,89 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Duck_0
+      name: Duck_Idle_Sprite_Sheet_0
       rect:
         serializedVersion: 2
-        x: 48
-        y: 34
-        width: 142
-        height: 156
+        x: 6
+        y: 5
+        width: 22
+        height: 22
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8048773e8c14475a0800000000000000
-      internalID: -6524517629087480824
+      spriteID: 524f07db4755c30b0800000000000000
+      internalID: -5747625064548731867
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Duck_Idle_Sprite_Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 5
+        width: 20
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e32d936cd6b8f2d20800000000000000
+      internalID: 3255974359205532222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Duck_Idle_Sprite_Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 5
+        width: 20
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a58a4256f4b144280800000000000000
+      internalID: -9060086522549327782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Duck_Idle_Sprite_Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 5
+        width: 20
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2579f5310b5c41260800000000000000
+      internalID: 7067491075281098578
       vertices: []
       indices: 
       edges: []
@@ -125,7 +200,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: bbcec182f8126f54488c24224dd67438
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +210,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Duck_0: -6524517629087480824
+      Duck_Idle_Sprite_Sheet_0: -5747625064548731867
+      Duck_Idle_Sprite_Sheet_1: 3255974359205532222
+      Duck_Idle_Sprite_Sheet_2: -9060086522549327782
+      Duck_Idle_Sprite_Sheet_3: 7067491075281098578
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

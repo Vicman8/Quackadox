@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Toast_Health_0: 6473928072112790164
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

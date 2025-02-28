@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
     //Dashing
     private bool canDash = true;
     private bool isDashing;
-    private float dashingPower = 24f;
+    private float dashingPower = 5f;
     private float dashingTime = 0.2f;
     private float dashingCooldown = 1f;
 
