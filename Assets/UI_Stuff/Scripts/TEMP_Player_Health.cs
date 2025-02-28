@@ -14,8 +14,8 @@ public class TEMP_Player_Health : MonoBehaviour
     public Image Heart4;
     public Image Heart5;
 
-    public Sprite dHeatlh;
-
+    public Sprite dHealth;
+    public Sprite hHealth;
 
     public GameObject Death_Screen;
 
@@ -40,8 +40,17 @@ public class TEMP_Player_Health : MonoBehaviour
 
     public void Damaged()
     {
-        T_Health[health - 1].sprite = dHeatlh;
+        T_Health[health - 1].sprite = dHealth;
         health -= 1;
         Debug.Log(health);
     }
+
+    public void Healed()
+    {
+        T_Health[health].sprite = hHealth;
+        health += 1;
+        Debug.Log(health);
+    }
+
+
 }
