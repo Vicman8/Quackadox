@@ -21,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private TrailRenderer tr;
+    [SerializeField] private Animator animator;
 
     // Update is called once per frame
     void Update()
@@ -32,12 +33,15 @@ public class PlayerMovement : MonoBehaviour
 
 
         horizontal = Input.GetAxisRaw("Horizontal");
-        if(Input.GetKeyDown(KeyCode.Space) && IsGrounded())
+
+        // Jumping
+        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPower);
+            animator.Play("DuckJump");
         }
 
-        if(Input.GetKeyDown(KeyCode.Space) && rb.linearVelocity.y > 0f)
+        if (Input.GetKeyDown(KeyCode.Space) && rb.linearVelocity.y > 0f)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.5f);
         }
@@ -47,8 +51,8 @@ public class PlayerMovement : MonoBehaviour
             StartCoroutine(Dash());
         }
 
+        UpdateAnimationState();
         Flip();
-
     }
 
     private void FixedUpdate()
@@ -98,5 +102,19 @@ public class PlayerMovement : MonoBehaviour
         canDash = true;
     }
 
-
+    private void UpdateAnimationState()
+    {
+        if (!IsGrounded())
+        {
+            animator.Play("DuckJump");
+        }
+        else if (horizontal != 0)
+        {
+            animator.Play("DuckWalk");
+        }
+        else
+        {
+            animator.Play("DuckIdle");
+        }
+    }
 }
