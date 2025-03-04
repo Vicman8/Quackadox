@@ -12,9 +12,11 @@ public class LaserDamage : MonoBehaviour
         if(collider.gameObject == player)
         {
             Debug.Log("OW!");
+            Rigidbody2D playerRB = player.GetComponent<PlayerMovement>().getRB();
+            playerRB.AddForce(player.transform.right + new Vector3(1000f,0f,0f), ForceMode2D.Impulse);
 
             //Brian's addition for UI testing
-            Phealth.Damaged();
+            //Phealth.Damaged();
         }
     }
 }

@@ -117,4 +117,9 @@ public class PlayerMovement : MonoBehaviour
             animator.Play("DuckIdle");
         }
     }
+
+    public Rigidbody2D getRB()
+    {
+        return rb;
+    }
 }

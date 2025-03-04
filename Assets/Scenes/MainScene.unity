@@ -1338,10 +1338,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: LaserEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 3210294933153610366, guid: f67cfef002616c143869badab15a06ce, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6834357090995391599, guid: f67cfef002616c143869badab15a06ce, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 1851542591}
+    - target: {fileID: 7116125014283926866, guid: f67cfef002616c143869badab15a06ce, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 491639741547695457, guid: f67cfef002616c143869badab15a06ce, type: 3}
     m_RemovedGameObjects: []
