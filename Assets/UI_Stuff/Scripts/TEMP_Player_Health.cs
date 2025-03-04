@@ -17,11 +17,11 @@ public class TEMP_Player_Health : MonoBehaviour
     public Sprite dHealth;
     public Sprite hHealth;
 
-    public GameObject Death_Screen;
+    //public GameObject Death_Screen;
 
     public void Start()
     {
-        Death_Screen.SetActive(false);
+        //Death_Screen.SetActive(false);
         T_Health = new Image[maxHealth];
         T_Health[0] = Heart1;
         T_Health[1] = Heart2;
@@ -33,7 +33,7 @@ public class TEMP_Player_Health : MonoBehaviour
     {
         if (health <= 0)
         {
-            Death_Screen.SetActive(true);
+            //Death_Screen.SetActive(true);
             Debug.Log("You dead");
         }
     }
