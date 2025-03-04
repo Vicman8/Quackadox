@@ -13,11 +13,11 @@ public class Portal : MonoBehaviour
         {
             if(player.GetHorizontal() >= 0 && nextPortal != null)
             {
-                player.transform.position = new Vector3(nextPortal.transform.position.x + 1.5f, nextPortal.transform.position.y, nextPortal.transform.position.z);
+                player.transform.position = new Vector3(nextPortal.transform.position.x + 5f, nextPortal.transform.position.y, nextPortal.transform.position.z);
             }
             else if(nextPortal != null)
             {
-                player.transform.position = new Vector3(nextPortal.transform.position.x - 1.5f, nextPortal.transform.position.y, nextPortal.transform.position.z);
+                player.transform.position = new Vector3(nextPortal.transform.position.x - 5f, nextPortal.transform.position.y, nextPortal.transform.position.z);
             }
             else if(nextScene != null)
             {

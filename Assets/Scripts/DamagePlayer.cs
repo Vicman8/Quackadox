@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class LaserDamage : MonoBehaviour
+public class DamagePlayer : MonoBehaviour
 {
     [SerializeField] private GameObject player;
 
