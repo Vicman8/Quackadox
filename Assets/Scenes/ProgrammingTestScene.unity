@@ -256,7 +256,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 17.25, y: -0.94, z: -10}
+  m_LocalPosition: {x: 17.25, y: 1.84, z: -10}
   m_LocalScale: {x: 7.9440475, y: 7.9155006, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1054,7 +1054,7 @@ GameObject:
   - component: {fileID: 1851542596}
   - component: {fileID: 1851542597}
   - component: {fileID: 1851542600}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1238,7 +1238,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfba7bde98aca574783273bb7b958251, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 2
+  attackPrefab: {fileID: 4071212603389749711, guid: bb41f26feb29025458d821dda6f4836a, type: 3}
+  attackSpeed: 10
+  attackLifetime: 1
 --- !u!96 &1851542598
 TrailRenderer:
   serializedVersion: 3
