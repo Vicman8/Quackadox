@@ -661,7 +661,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 1.06, y: 0.76, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2278,7 +2278,7 @@ Transform:
   m_GameObject: {fileID: 1763298714}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0339, y: -0.114, z: 0}
+  m_LocalPosition: {x: -0.0339, y: -0.355, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2432,8 +2432,8 @@ Transform:
   m_GameObject: {fileID: 1851542591}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.05, y: -1.02, z: 0}
-  m_LocalScale: {x: 7.9440475, y: 7.9155006, z: 1}
+  m_LocalPosition: {x: -7.83, y: -2.27, z: 0}
+  m_LocalScale: {x: 3.874312, y: 3.5619752, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1763298715}
@@ -2501,17 +2501,17 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.00078584254, y: 0.00043015927}
+  m_Offset: {x: 0.0017927289, y: 0.0018325895}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.21, y: 0.23}
+    oldSize: {x: 0.65625, y: 0.71875}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.21433744, y: 0.23520438}
+  m_Size: {x: 0.6836561, y: 0.74287117}
   m_EdgeRadius: 0
 --- !u!114 &1851542596
 MonoBehaviour:
@@ -2532,6 +2532,7 @@ MonoBehaviour:
     m_Bits: 64
   tr: {fileID: 1851542598}
   animator: {fileID: 1851542599}
+  portalPrefab: {fileID: 4527202700755663203, guid: 9e075ca43b11ec04ab9cea7aa9c46575, type: 3}
 --- !u!114 &1851542597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2621,7 +2622,7 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0.52156866, g: 0.31764707, b: 0.8, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 0}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
