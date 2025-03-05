@@ -16,12 +16,12 @@ public class PlayerMovement : MonoBehaviour
     private float dashingTime = 0.2f;
     private float dashingCooldown = 1f;
 
-
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private TrailRenderer tr;
     [SerializeField] private Animator animator;
+    [SerializeField] private GameObject portalPrefab;
 
     // Update is called once per frame
     void Update()
@@ -30,7 +30,6 @@ public class PlayerMovement : MonoBehaviour
         {
             return;
         }
-
 
         horizontal = Input.GetAxisRaw("Horizontal");
 
@@ -48,7 +47,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
         {
-            StartCoroutine(Dash());
+            StartCoroutine(PortalDash());
         }
 
         UpdateAnimationState();
@@ -86,7 +85,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private IEnumerator Dash()
+    private IEnumerator PortalDash()
     {
         canDash = false;
         isDashing = true;
@@ -94,10 +93,31 @@ public class PlayerMovement : MonoBehaviour
         rb.gravityScale = 0f;
         rb.linearVelocity = new Vector2(transform.localScale.x * dashingPower, 0f);
         tr.emitting = true;
+
+        Vector2 dashDirection = isFacingRight ? Vector2.right : Vector2.left;
+
+        // Create entry portal farther from the player
+        Vector2 entryPosition = (Vector2)transform.position + dashDirection * 3f;
+        GameObject entryPortal = Instantiate(portalPrefab, entryPosition, Quaternion.identity);
+
+        yield return new WaitForSeconds(0.1f);
+
+        // Create exit portal
+        Vector2 exitPosition = entryPosition + dashDirection * 5f;
+        GameObject exitPortal = Instantiate(portalPrefab, exitPosition, Quaternion.identity);
+
+        // Teleport player to exit portal
+        transform.position = exitPosition;
+
         yield return new WaitForSeconds(dashingTime);
         tr.emitting = false;
         rb.gravityScale = originalGravity;
         isDashing = false;
+
+        // Remove portals after dash
+        Destroy(entryPortal);
+        Destroy(exitPortal);
+
         yield return new WaitForSeconds(dashingCooldown);
         canDash = true;
     }
@@ -121,5 +141,10 @@ public class PlayerMovement : MonoBehaviour
     public Rigidbody2D getRB()
     {
         return rb;
+    }
+
+    public bool IsDashing()
+    {
+        return isDashing;
     }
 }
