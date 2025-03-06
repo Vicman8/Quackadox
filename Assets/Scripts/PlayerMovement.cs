@@ -23,6 +23,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private GameObject portalPrefab;
 
+    private bool isBeingPushed = false;
+
     // Update is called once per frame
     void Update()
     {
@@ -56,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (isDashing)
+        if (isDashing || isBeingPushed)
         {
             return;
         }
@@ -138,7 +140,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public Rigidbody2D getRB()
+    public Rigidbody2D GetRB()
     {
         return rb;
     }
@@ -146,5 +148,15 @@ public class PlayerMovement : MonoBehaviour
     public bool IsDashing()
     {
         return isDashing;
+    }
+
+    public bool GetPushed()
+    {
+        return isBeingPushed;
+    }
+
+    public void SetPushed(bool pushed)
+    {
+        isBeingPushed = pushed;
     }
 }
