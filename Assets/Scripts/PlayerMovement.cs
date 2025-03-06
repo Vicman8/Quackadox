@@ -50,9 +50,14 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
         {
             StartCoroutine(PortalDash());
+            animator.Play("DuckDash");
         }
 
-        UpdateAnimationState();
+        if (Input.GetMouseButtonDown(1))
+        {
+            animator.Play("DuckQuack");
+        }
+            UpdateAnimationState();
         Flip();
     }
 
