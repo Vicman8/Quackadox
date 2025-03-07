@@ -16,7 +16,7 @@ public class DamagePlayer : MonoBehaviour
             playerRB.AddForce(player.transform.right + new Vector3(1000f,0f,0f), ForceMode2D.Impulse);
 
             //Brian's addition for UI testing
-            //Phealth.Damaged();
+            Phealth.Damaged();
         }
     }
 }

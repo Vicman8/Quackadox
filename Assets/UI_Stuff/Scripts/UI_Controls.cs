@@ -6,7 +6,7 @@ public class UI_Controls : MonoBehaviour
 {
     public GameObject PauseMenu;
     private Boolean IsPaused;
-
+    public float pauseState = 0;
     public void Start()
     {
         Continue();
@@ -26,6 +26,7 @@ public class UI_Controls : MonoBehaviour
     }
     public void Paused()
     {
+        pauseState = 1;
         PauseMenu.SetActive(true);
         Time.timeScale = 0;
         IsPaused = true;
@@ -33,6 +34,7 @@ public class UI_Controls : MonoBehaviour
 
     public void Continue()
     {
+        pauseState = 0;
         PauseMenu.SetActive(false);
         Time.timeScale = 1;
         IsPaused = false;

@@ -23,6 +23,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private GameObject portalPrefab;
 
+    //UI stuff
+    public UI_Controls UI;
+
     // Update is called once per frame
     void Update()
     {
@@ -31,10 +34,13 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        horizontal = Input.GetAxisRaw("Horizontal");
+        if (UI.pauseState == 0)
+        {
+            horizontal = Input.GetAxisRaw("Horizontal");
+        }
 
         // Jumping
-        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
+        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded() && UI.pauseState == 0)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPower);
             animator.Play("DuckJump");
@@ -45,7 +51,7 @@ public class PlayerMovement : MonoBehaviour
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.5f);
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && UI.pauseState == 0)
         {
             StartCoroutine(PortalDash());
         }
