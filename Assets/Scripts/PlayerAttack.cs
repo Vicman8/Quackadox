@@ -12,7 +12,8 @@ public class PlayerAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+
+                 if (Input.GetMouseButtonDown(0))
         {
             Debug.Log("Melee Attack");
             PerformMeleeAttack();
@@ -23,6 +24,7 @@ public class PlayerAttack : MonoBehaviour
             Debug.Log("Long Range Attack");
             PerformLongRangeAttack();
         }
+        
     }
 
     void PerformMeleeAttack()
