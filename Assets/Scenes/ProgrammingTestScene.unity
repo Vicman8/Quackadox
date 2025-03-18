@@ -2027,6 +2027,7 @@ MonoBehaviour:
   PointA: {fileID: 631546703}
   PointB: {fileID: 401845968}
   speed: 2
+  PlayerPoint: {fileID: 1851542593}
 --- !u!50 &2082138337
 Rigidbody2D:
   serializedVersion: 5
