@@ -53,10 +53,6 @@ public class PlayerMovement : MonoBehaviour
             animator.Play("DuckDash");
         }
 
-        if (Input.GetMouseButtonDown(1))
-        {
-            animator.Play("DuckQuack");
-        }
             UpdateAnimationState();
         Flip();
     }
