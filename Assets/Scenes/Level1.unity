@@ -689,7 +689,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6049752324488311275, guid: 3736186e52352734281e20312870d3d5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.14549387
+      value: 1.04
       objectReference: {fileID: 0}
     - target: {fileID: 6049752324488311275, guid: 3736186e52352734281e20312870d3d5, type: 3}
       propertyPath: m_LocalPosition.z
@@ -844,7 +844,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6049752324488311275, guid: 3736186e52352734281e20312870d3d5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.14549387
+      value: 1.04
       objectReference: {fileID: 0}
     - target: {fileID: 6049752324488311275, guid: 3736186e52352734281e20312870d3d5, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1879,7 +1879,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6049752324488311275, guid: 3736186e52352734281e20312870d3d5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.14549387
+      value: 1.04
       objectReference: {fileID: 0}
     - target: {fileID: 6049752324488311275, guid: 3736186e52352734281e20312870d3d5, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2545,7 +2545,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfba7bde98aca574783273bb7b958251, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 2
+  attackPrefab: {fileID: 0}
+  attackSpeed: 10
+  attackLifetime: 1
 --- !u!96 &1851542598
 TrailRenderer:
   serializedVersion: 3
@@ -2967,7 +2969,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6049752324488311275, guid: 3736186e52352734281e20312870d3d5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.14549387
+      value: 1.04
       objectReference: {fileID: 0}
     - target: {fileID: 6049752324488311275, guid: 3736186e52352734281e20312870d3d5, type: 3}
       propertyPath: m_LocalPosition.z
