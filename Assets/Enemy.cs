@@ -1,6 +1,7 @@
 using System;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class Enemy : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class Enemy : MonoBehaviour
 
     public Transform PlayerPoint;
 
+    public bool Guarding;
+
     //public EnemyAttack EnemyA;
 
 
@@ -20,49 +23,36 @@ public class Enemy : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         currentPoint = PointB.transform;
-
+        Guarding = true;
 
     }
 
     // Update is called once per frame
     public void Update()
     {
-        /*
-        Vector2 point = currentPoint.position - transform.position;
-        if (currentPoint == PointB.transform)
+        if (Guarding)
         {
-            rb.linearVelocity = new Vector2(speed, 0);
-            //EnemyA.Flip();
-
+            Guard();
         }
-        else {
-            rb.linearVelocity = new Vector2(-speed, 0);
-            //EnemyA.Flip();
-        }
-
-        if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == PointB.transform)
+        else if (!Guarding)
         {
-            currentPoint = PointA.transform;
+            FollowPlayer();
         }
-
-        if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == PointA.transform)
-        {
-            currentPoint = PointB.transform;
-        }
-        */
-        //Guard();
-        FollowPlayer();
-
-
     }
 
     public void FollowPlayer()
     {
-        transform.position = Vector2.MoveTowards(transform.position, PlayerPoint.position, .02f);
+        //Guarding = false;
+        Vector3 direction = (PlayerPoint.position - transform.position).normalized;
+        direction.y = 0f; // Lock movement on Y-axis
+
+        // Apply velocity with X-axis movement only
+        rb.linearVelocity = new Vector3(direction.x * speed, rb.linearVelocity.y, 0f);
     }
 
     public void Guard()
     {
+        //Guarding = true;
         Vector2 point = currentPoint.position - transform.position;
         if (currentPoint == PointB.transform)
         {

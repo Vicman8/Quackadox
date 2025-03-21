@@ -772,6 +772,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4bbee7022759194898cb4f4623d3eee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemy: {fileID: 2082138336}
+  countDown: 0
+  Detect: 0
 --- !u!58 &1294830782
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2026,8 +2029,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PointA: {fileID: 631546703}
   PointB: {fileID: 401845968}
-  speed: 2
+  speed: 4
   PlayerPoint: {fileID: 1851542593}
+  Guarding: 0
 --- !u!50 &2082138337
 Rigidbody2D:
   serializedVersion: 5
