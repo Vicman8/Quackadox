@@ -16,6 +16,15 @@ public class PlayerMovement : MonoBehaviour
     private float dashingTime = 0.2f;
     private float dashingCooldown = 1f;
 
+    // New dash charging variables
+    private float dashChargeTime = 0f;
+    private float minChargeDuration = 0.5f;  // Minimum time to start charging
+    private float shortChargeDuration = 3f;  // Short charge duration
+    private float longChargeDuration = 5f;   // Long charge duration
+    private float shortDashDistance = 3f;    // Distance for short dash
+    private float mediumDashDistance = 5f;   // Distance for medium dash
+    private float longDashDistance = 8f;     // Distance for long dash
+
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
@@ -25,7 +34,6 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isBeingPushed = false;
 
-    // Update is called once per frame
     void Update()
     {
         if (isDashing)
@@ -47,13 +55,24 @@ public class PlayerMovement : MonoBehaviour
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.5f);
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
+        // Dash charging mechanism
+        if (Input.GetKey(KeyCode.LeftShift) && canDash)
         {
-            StartCoroutine(PortalDash());
-            animator.Play("DuckDash");
+            dashChargeTime += Time.deltaTime;
         }
 
-            UpdateAnimationState();
+        // Trigger dash when Shift key is released
+        if (Input.GetKeyUp(KeyCode.LeftShift) && canDash)
+        {
+            if (dashChargeTime > 0)
+            {
+                StartCoroutine(PortalDash());
+                animator.Play("DuckDash");
+            }
+            dashChargeTime = 0f;
+        }
+
+        UpdateAnimationState();
         Flip();
     }
 
@@ -72,6 +91,7 @@ public class PlayerMovement : MonoBehaviour
         return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
     }
 
+    // Added back the GetHorizontal method
     public float GetHorizontal()
     {
         return horizontal;
@@ -99,14 +119,37 @@ public class PlayerMovement : MonoBehaviour
 
         Vector2 dashDirection = isFacingRight ? Vector2.right : Vector2.left;
 
+        // Determine dash distance based on charge time
+        float dashDistance;
+        if (dashChargeTime < minChargeDuration)
+        {
+            // Very short tap - minimal dash
+            dashDistance = shortDashDistance;
+        }
+        else if (dashChargeTime < shortChargeDuration)
+        {
+            // Short charge
+            dashDistance = mediumDashDistance;
+        }
+        else if (dashChargeTime < longChargeDuration)
+        {
+            // Longer charge
+            dashDistance = longDashDistance;
+        }
+        else
+        {
+            // Maximum charge
+            dashDistance = longDashDistance * 1.5f;
+        }
+
         // Create entry portal farther from the player
-        Vector2 entryPosition = (Vector2)transform.position + dashDirection * 3f;
+        Vector2 entryPosition = (Vector2)transform.position + dashDirection * dashDistance;
         GameObject entryPortal = Instantiate(portalPrefab, entryPosition, Quaternion.identity);
 
         yield return new WaitForSeconds(0.1f);
 
         // Create exit portal
-        Vector2 exitPosition = entryPosition + dashDirection * 5f;
+        Vector2 exitPosition = entryPosition + dashDirection * dashDistance;
         GameObject exitPortal = Instantiate(portalPrefab, exitPosition, Quaternion.identity);
 
         // Teleport player to exit portal
