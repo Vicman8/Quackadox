@@ -16,8 +16,13 @@ public class PlayerMovement : MonoBehaviour
     private float dashingTime = 0.2f;
     private float dashingCooldown = 1f;
 
-    // New dash charging variables
+    // Dash Charge System
+    private float maxDashCharge = 5f;  // Total dash charge
+    private float currentDashCharge = 5f;  // Current available charge
+    private float dashRechargeRate = 1f;  // Charge per second
     private float dashChargeTime = 0f;
+
+    // Dash Charge Durations
     private float minChargeDuration = 0.5f;  // Minimum time to start charging
     private float shortChargeDuration = 3f;  // Short charge duration
     private float longChargeDuration = 5f;   // Long charge duration
@@ -33,9 +38,24 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private GameObject portalPrefab;
 
     private bool isBeingPushed = false;
+    private float dashRechargeCooldownTimer = 0f;
 
     void Update()
     {
+        // Dash Charge Recharge
+        if (currentDashCharge < maxDashCharge)
+        {
+            currentDashCharge += dashRechargeRate * Time.deltaTime;
+            currentDashCharge = Mathf.Min(currentDashCharge, maxDashCharge);
+        }
+
+        // Dash Recharge Cooldown Timer
+        if (dashRechargeCooldownTimer > 0)
+        {
+            dashRechargeCooldownTimer -= Time.deltaTime;
+            Debug.Log($"Dash Recharge Cooldown: {dashRechargeCooldownTimer:F2} seconds remaining");
+        }
+
         if (isDashing)
         {
             return;
@@ -64,16 +84,44 @@ public class PlayerMovement : MonoBehaviour
         // Trigger dash when Shift key is released
         if (Input.GetKeyUp(KeyCode.LeftShift) && canDash)
         {
-            if (dashChargeTime > 0)
+            if (dashChargeTime > 0 && currentDashCharge > 0)
             {
-                StartCoroutine(PortalDash());
-                animator.Play("DuckDash");
+                float dashCost = CalculateDashCost(dashChargeTime);
+                if (currentDashCharge >= dashCost)
+                {
+                    StartCoroutine(PortalDash(dashCost));
+                    animator.Play("DuckDash");
+                }
+                else
+                {
+                    Debug.Log("Not enough dash charge!");
+                }
             }
             dashChargeTime = 0f;
         }
 
         UpdateAnimationState();
         Flip();
+    }
+
+    private float CalculateDashCost(float chargeTime)
+    {
+        if (chargeTime < minChargeDuration)
+        {
+            return 1f;  // Minimal dash
+        }
+        else if (chargeTime < shortChargeDuration)
+        {
+            return 2f;  // Short dash
+        }
+        else if (chargeTime < longChargeDuration)
+        {
+            return 3f;  // Medium dash
+        }
+        else
+        {
+            return 5f;  // Full charge dash
+        }
     }
 
     private void FixedUpdate()
@@ -91,7 +139,6 @@ public class PlayerMovement : MonoBehaviour
         return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
     }
 
-    // Added back the GetHorizontal method
     public float GetHorizontal()
     {
         return horizontal;
@@ -108,10 +155,15 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private IEnumerator PortalDash()
+    private IEnumerator PortalDash(float dashCost)
     {
         canDash = false;
         isDashing = true;
+        currentDashCharge -= dashCost;
+
+        // Set cooldown based on dash cost
+        dashRechargeCooldownTimer = dashCost;
+
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0f;
         rb.linearVelocity = new Vector2(transform.localScale.x * dashingPower, 0f);
@@ -121,24 +173,20 @@ public class PlayerMovement : MonoBehaviour
 
         // Determine dash distance based on charge time
         float dashDistance;
-        if (dashChargeTime < minChargeDuration)
+        if (dashCost <= 1f)
         {
-            // Very short tap - minimal dash
             dashDistance = shortDashDistance;
         }
-        else if (dashChargeTime < shortChargeDuration)
+        else if (dashCost <= 2f)
         {
-            // Short charge
             dashDistance = mediumDashDistance;
         }
-        else if (dashChargeTime < longChargeDuration)
+        else if (dashCost <= 3f)
         {
-            // Longer charge
             dashDistance = longDashDistance;
         }
         else
         {
-            // Maximum charge
             dashDistance = longDashDistance * 1.5f;
         }
 
@@ -166,6 +214,8 @@ public class PlayerMovement : MonoBehaviour
 
         yield return new WaitForSeconds(dashingCooldown);
         canDash = true;
+
+        Debug.Log($"Dash Charge Remaining: {currentDashCharge:F2}");
     }
 
     private void UpdateAnimationState()

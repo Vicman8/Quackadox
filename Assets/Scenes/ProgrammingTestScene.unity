@@ -1202,7 +1202,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.75, y: 0.8125}
+    oldSize: {x: 0.65625, y: 0.71875}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -1245,6 +1245,7 @@ MonoBehaviour:
   attackPrefab: {fileID: 4071212603389749711, guid: bb41f26feb29025458d821dda6f4836a, type: 3}
   attackSpeed: 10
   attackLifetime: 1
+  animator: {fileID: 1851542599}
 --- !u!96 &1851542598
 TrailRenderer:
   serializedVersion: 3
