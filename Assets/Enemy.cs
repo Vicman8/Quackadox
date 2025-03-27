@@ -1,6 +1,7 @@
 using System;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.Searcher.SearcherWindow.Alignment;
 using static UnityEngine.GraphicsBuffer;
 
 public class Enemy : MonoBehaviour
@@ -14,6 +15,7 @@ public class Enemy : MonoBehaviour
     public Transform PlayerPoint;
 
     public bool Guarding;
+    
 
     //public EnemyAttack EnemyA;
 
@@ -38,6 +40,9 @@ public class Enemy : MonoBehaviour
         {
             FollowPlayer();
         }
+
+        
+
     }
 
     public void FollowPlayer()
@@ -48,6 +53,19 @@ public class Enemy : MonoBehaviour
 
         // Apply velocity with X-axis movement only
         rb.linearVelocity = new Vector3(direction.x * speed, rb.linearVelocity.y, 0f);
+        if(direction.x > 0)
+        {
+            Vector3 localScale = transform.localScale;
+            localScale.x = 1.25f;
+            transform.localScale = localScale;
+        } 
+        else if(direction.x < 0)
+        {
+            Vector3 localScale = transform.localScale;
+            localScale.x = -1.25f;
+            transform.localScale = localScale;
+        }
+        Debug.Log(direction.x);
     }
 
     public void Guard()
@@ -57,14 +75,23 @@ public class Enemy : MonoBehaviour
         if (currentPoint == PointB.transform)
         {
             rb.linearVelocity = new Vector2(speed, 0);
+            Vector3 localScale = transform.localScale;
+            localScale.x = 1.25f;
+            transform.localScale = localScale;
+            //Flip();
             //EnemyA.Flip();
 
         }
         else
         {
             rb.linearVelocity = new Vector2(-speed, 0);
+            Vector3 localScale = transform.localScale;
+            localScale.x = -1.25f;
+            transform.localScale = localScale;
             //EnemyA.Flip();
+            //Flip();
         }
+
 
         if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == PointB.transform)
         {
@@ -77,5 +104,15 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    /*
 
+    private void Flip()
+    {
+            Vector3 localScale = transform.localScale;
+            localScale.x *= -1f;
+            transform.localScale = localScale;
+        
+    }
+
+    */
 }

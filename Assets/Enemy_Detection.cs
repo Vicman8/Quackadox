@@ -14,14 +14,14 @@ public class Enemy_Detection : MonoBehaviour
         if (Detect)
         {
             countDown = countDown - 1 * Time.deltaTime;
-            Debug.Log("The duckkkk");
+            //Debug.Log("The duckkkk");
         }
         else if (!Detect)
         {
             countDown = 4;
             //enemy.Guard();
             enemy.Guarding = true;
-            Debug.Log("huh, where is duck");
+            //Debug.Log("huh, where is duck");
         }
 
         if (countDown <= 0)
@@ -31,7 +31,7 @@ public class Enemy_Detection : MonoBehaviour
 
 
         //countDown = countDown - 1 * Time.deltaTime;
-        Debug.Log($"{countDown}");
+        //Debug.Log($"{countDown}");
     }
 
     public void OnTriggerEnter2D(Collider2D collision)

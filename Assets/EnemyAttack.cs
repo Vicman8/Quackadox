@@ -7,20 +7,6 @@ public class EnemyAttack : MonoBehaviour
     public GameObject HitBox;
 
 
-    public void Update()
-    {
-        if (Input.GetKeyUp(KeyCode.G))
-        {
-            Flip();
-        }
-    }
-
-    public void Flip()
-    {
-        Vector3 hi = HitBox.transform.localPosition;
-        hi.x += 1f;
-        Debug.Log(hi.x);
-    }
 
 
     public void OnTriggerEnter2D(Collider2D collision)
