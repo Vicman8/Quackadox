@@ -222,7 +222,11 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Duck_UI Buttons_0: 1678393253023983087
+      Duck_UI Buttons_1: -5293385608401869730
+      Duck_UI Buttons_2: -3928347346990909372
+      Duck_UI Buttons_3: -9063985495690525353
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
