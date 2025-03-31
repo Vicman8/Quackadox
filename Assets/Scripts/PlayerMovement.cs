@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    private Color originalBackgroundColor;
+
     private float horizontal;
     private float speed = 8f;
     private float jumpPower = 60f;
@@ -17,18 +19,9 @@ public class PlayerMovement : MonoBehaviour
     private float dashingCooldown = 1f;
 
     // Dash Charge System
-    private float maxDashCharge = 5f;  // Total dash charge
-    private float currentDashCharge = 5f;  // Current available charge
-    private float dashRechargeRate = 1f;  // Charge per second
-    private float dashChargeTime = 0f;
-
-    // Dash Charge Durations
-    private float minChargeDuration = 0.5f;  // Minimum time to start charging
-    private float shortChargeDuration = 3f;  // Short charge duration
-    private float longChargeDuration = 5f;   // Long charge duration
-    private float shortDashDistance = 3f;    // Distance for short dash
-    private float mediumDashDistance = 5f;   // Distance for medium dash
-    private float longDashDistance = 8f;     // Distance for long dash
+    private float maxDashCharge = 5f;
+    private float currentDashCharge = 5f;
+    private float dashRechargeRate = 1f;
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
@@ -40,6 +33,12 @@ public class PlayerMovement : MonoBehaviour
     private bool isBeingPushed = false;
     private float dashRechargeCooldownTimer = 0f;
 
+    void Start()
+    {
+        // Save the original background color when the game starts
+        originalBackgroundColor = Camera.main.backgroundColor;
+    }
+
     void Update()
     {
         // Dash Charge Recharge
@@ -49,11 +48,9 @@ public class PlayerMovement : MonoBehaviour
             currentDashCharge = Mathf.Min(currentDashCharge, maxDashCharge);
         }
 
-        // Dash Recharge Cooldown Timer
         if (dashRechargeCooldownTimer > 0)
         {
             dashRechargeCooldownTimer -= Time.deltaTime;
-            Debug.Log($"Dash Recharge Cooldown: {dashRechargeCooldownTimer:F2} seconds remaining");
         }
 
         if (isDashing)
@@ -75,53 +72,15 @@ public class PlayerMovement : MonoBehaviour
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.5f);
         }
 
-        // Dash charging mechanism
-        if (Input.GetKey(KeyCode.LeftShift) && canDash)
+        // Trigger dash when Shift key is pressed
+        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && currentDashCharge > 0)
         {
-            dashChargeTime += Time.deltaTime;
-        }
-
-        // Trigger dash when Shift key is released
-        if (Input.GetKeyUp(KeyCode.LeftShift) && canDash)
-        {
-            if (dashChargeTime > 0 && currentDashCharge > 0)
-            {
-                float dashCost = CalculateDashCost(dashChargeTime);
-                if (currentDashCharge >= dashCost)
-                {
-                    StartCoroutine(PortalDash(dashCost));
-                    animator.Play("DuckDash");
-                }
-                else
-                {
-                    Debug.Log("Not enough dash charge!");
-                }
-            }
-            dashChargeTime = 0f;
+            StartCoroutine(PortalDash());
+            animator.Play("DuckDash");
         }
 
         UpdateAnimationState();
         Flip();
-    }
-
-    private float CalculateDashCost(float chargeTime)
-    {
-        if (chargeTime < minChargeDuration)
-        {
-            return 1f;  // Minimal dash
-        }
-        else if (chargeTime < shortChargeDuration)
-        {
-            return 2f;  // Short dash
-        }
-        else if (chargeTime < longChargeDuration)
-        {
-            return 3f;  // Medium dash
-        }
-        else
-        {
-            return 5f;  // Full charge dash
-        }
     }
 
     private void FixedUpdate()
@@ -130,7 +89,6 @@ public class PlayerMovement : MonoBehaviour
         {
             return;
         }
-
         rb.linearVelocity = new Vector2(horizontal * speed, rb.linearVelocity.y);
     }
 
@@ -143,7 +101,6 @@ public class PlayerMovement : MonoBehaviour
     {
         return horizontal;
     }
-
     private void Flip()
     {
         if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
@@ -155,14 +112,11 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private IEnumerator PortalDash(float dashCost)
+    private IEnumerator PortalDash()
     {
         canDash = false;
         isDashing = true;
-        currentDashCharge -= dashCost;
-
-        // Set cooldown based on dash cost
-        dashRechargeCooldownTimer = dashCost;
+        currentDashCharge -= 1f; // Deduct charge for each dash
 
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0f;
@@ -170,25 +124,7 @@ public class PlayerMovement : MonoBehaviour
         tr.emitting = true;
 
         Vector2 dashDirection = isFacingRight ? Vector2.right : Vector2.left;
-
-        // Determine dash distance based on charge time
-        float dashDistance;
-        if (dashCost <= 1f)
-        {
-            dashDistance = shortDashDistance;
-        }
-        else if (dashCost <= 2f)
-        {
-            dashDistance = mediumDashDistance;
-        }
-        else if (dashCost <= 3f)
-        {
-            dashDistance = longDashDistance;
-        }
-        else
-        {
-            dashDistance = longDashDistance * 1.5f;
-        }
+        float dashDistance = 5f;
 
         // Create entry portal farther from the player
         Vector2 entryPosition = (Vector2)transform.position + dashDirection * dashDistance;
@@ -200,6 +136,9 @@ public class PlayerMovement : MonoBehaviour
         Vector2 exitPosition = entryPosition + dashDirection * dashDistance;
         GameObject exitPortal = Instantiate(portalPrefab, exitPosition, Quaternion.identity);
 
+        // Switch the world after the dash
+        SwitchWorld(); // Call world switch method here
+
         // Teleport player to exit portal
         transform.position = exitPosition;
 
@@ -208,14 +147,11 @@ public class PlayerMovement : MonoBehaviour
         rb.gravityScale = originalGravity;
         isDashing = false;
 
-        // Remove portals after dash
         Destroy(entryPortal);
         Destroy(exitPortal);
 
         yield return new WaitForSeconds(dashingCooldown);
         canDash = true;
-
-        Debug.Log($"Dash Charge Remaining: {currentDashCharge:F2}");
     }
 
     private void UpdateAnimationState()
@@ -259,6 +195,24 @@ public class PlayerMovement : MonoBehaviour
         if (animator != null)
         {
             animator.Play("DuckQuack");
+        }
+    }
+
+
+    private void SwitchWorld()
+    {
+        // Check if the world is currently in the altered state
+        if (Camera.main.backgroundColor == originalBackgroundColor)
+        {
+            // If it's the original color, switch to the new color (e.g., red)
+            Camera.main.backgroundColor = Color.red;
+            Debug.Log("World switched to red!");
+        }
+        else
+        {
+            // If it's already altered, switch back to the original color
+            Camera.main.backgroundColor = originalBackgroundColor;
+            Debug.Log("World switched back to the original state!");
         }
     }
 }
