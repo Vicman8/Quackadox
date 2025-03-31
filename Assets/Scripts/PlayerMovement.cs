@@ -253,4 +253,12 @@ public class PlayerMovement : MonoBehaviour
     {
         isBeingPushed = pushed;
     }
+
+    public void PlayDuckQuackAnimation()
+    {
+        if (animator != null)
+        {
+            animator.Play("DuckQuack");
+        }
+    }
 }

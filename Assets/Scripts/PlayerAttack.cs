@@ -9,10 +9,10 @@ public class PlayerAttack : MonoBehaviour
 
     private int attackIndex = 0; // Keep track of how many attacks we've shot
 
-    [SerializeField] private Animator animator;
     // Update is called once per frame
     void Update()
     {
+
         if (Input.GetMouseButtonDown(0))
         {
             Debug.Log("Melee Attack");
@@ -22,8 +22,13 @@ public class PlayerAttack : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             Debug.Log("Long Range Attack");
+
+            PlayerMovement playerMovement = GetComponent<PlayerMovement>();
+            if (playerMovement != null)
+            {
+                playerMovement.PlayDuckQuackAnimation();
+            }
             PerformLongRangeAttack();
-            animator.Play("DuckQuack");
         }
     }
 
