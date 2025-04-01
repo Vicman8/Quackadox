@@ -26,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
     private float currentDashCharge = 5f;
     private float dashRechargeRate = 1f;
 
-    [SerializeField] private Rigidbody2D rb;
+
 
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;

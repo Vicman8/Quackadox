@@ -25,7 +25,7 @@ public class TEMP_Player_Health : MonoBehaviour
 
 
     private CheckpointManager checkpointManager;
-    private bool isRespawning = false;
+    //private bool isRespawning = false;
 
     public void Start()
     {
