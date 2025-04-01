@@ -8,17 +8,14 @@ public class TEMP_Player_Health : MonoBehaviour
     //Variables
     public int health = 5;
     public int maxHealth = 5;
-
     public Image[] T_Health;
     public Image Heart1;
     public Image Heart2;
     public Image Heart3;
     public Image Heart4;
     public Image Heart5;
-
     public Sprite dHealth;
     public Sprite hHealth;
-
     //public GameObject Death_Screen;
 
     private CheckpointManager checkpointManager;
@@ -37,9 +34,10 @@ public class TEMP_Player_Health : MonoBehaviour
         // Find the CheckpointManager
         checkpointManager = CheckpointManager.Instance;
     }
+
     public void Update()
     {
-        if (health <= 0)
+        if (health <= 0 && !isRespawning)
         {
             isRespawning = true;
             //Death_Screen.SetActive(true);

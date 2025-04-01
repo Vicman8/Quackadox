@@ -5,6 +5,7 @@ public class DamagePlayer : MonoBehaviour
 {
     [SerializeField] private GameObject player;
     private Rigidbody2D playerRB;
+    [SerializeField] private bool shouldPushPlayer;
 
     //brian's addition for UI testing
     public TEMP_Player_Health Phealth;
@@ -21,19 +22,23 @@ public class DamagePlayer : MonoBehaviour
             Debug.Log("OW!");
             //Rigidbody2D playerRB = player.GetComponent<PlayerMovement>().getRB();
             //playerRB.AddForce(player.transform.right + new Vector3(1000f,0f,0f), ForceMode2D.Impulse);
-            player.GetComponent<PlayerMovement>().SetPushed(true);
-            float movementDirection = player.GetComponent<PlayerMovement>().GetHorizontal();
-            if(movementDirection < 0)
+
+            if(shouldPushPlayer)
             {
-                playerRB.linearVelocity = new Vector3(45f, 0f, 0f);
-                Debug.Log("Movement is negative");
-                StartCoroutine(ChangeExternalVelocityRight());
-            }
-            else
-            {
-                playerRB.linearVelocity = new Vector3(-45f, 0f, 0f);
-                Debug.Log("Movement is positive or zero");
-                StartCoroutine(ChangeExternalVelocityLeft());
+                player.GetComponent<PlayerMovement>().SetPushed(true);
+                float movementDirection = player.GetComponent<PlayerMovement>().GetHorizontal();
+                if (movementDirection < 0)
+                {
+                    playerRB.linearVelocity = new Vector3(45f, 0f, 0f);
+                    Debug.Log("Movement is negative");
+                    StartCoroutine(ChangeExternalVelocityRight());
+                }
+                else
+                {
+                    playerRB.linearVelocity = new Vector3(-45f, 0f, 0f);
+                    Debug.Log("Movement is positive or zero");
+                    StartCoroutine(ChangeExternalVelocityLeft());
+                }
             }
 
             //Brian's addition for UI testing
