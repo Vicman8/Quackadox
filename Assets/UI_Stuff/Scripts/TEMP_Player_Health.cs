@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class TEMP_Player_Health : MonoBehaviour
 {
@@ -17,7 +19,8 @@ public class TEMP_Player_Health : MonoBehaviour
     public Sprite dHealth;
     public Sprite hHealth;
 
-    //public GameObject Death_Screen;
+    //private CheckpointManager checkpointManager;
+    private bool isRespawning = false;
 
     public void Start()
     {
@@ -28,15 +31,41 @@ public class TEMP_Player_Health : MonoBehaviour
         T_Health[2] = Heart3;
         T_Health[3] = Heart4;
         T_Health[4] = Heart5;
+
+        //checkpointManager = CheckpointManager.Instance;
     }
     public void Update()
     {
-        if (health <= 0)
+        if (health <= 0 && !isRespawning)
         {
+            isRespawning = true;
             //Death_Screen.SetActive(true);
             Debug.Log("You dead");
+
+            // Start death sequence
+            //StartCoroutine(HandleDeath());
         }
     }
+    /*
+    private IEnumerator HandleDeath()
+    {
+        // Short delay before respawning
+        yield return new WaitForSeconds(1.0f);
+
+        // Notify checkpoint manager
+        if (checkpointManager != null)
+        {
+            checkpointManager.PlayerDied();
+        }
+        else
+        {
+            Debug.LogError("CheckpointManager not found!");
+            // Fallback reset if no checkpoint manager
+            ResetHealth();
+            isRespawning = false;
+        }
+    }
+    */
 
     public void Damaged()
     {
@@ -52,5 +81,17 @@ public class TEMP_Player_Health : MonoBehaviour
         Debug.Log(health);
     }
 
+    public void ResetHealth()
+    {
+        health = maxHealth;
 
+        // Reset all heart sprites
+        for (int i = 0; i < maxHealth; i++)
+        {
+            T_Health[i].sprite = hHealth;
+        }
+
+        isRespawning = false;
+        Debug.Log("Health reset to " + health);
+    }
 }
