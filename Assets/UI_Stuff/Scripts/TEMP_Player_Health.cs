@@ -8,18 +8,23 @@ public class TEMP_Player_Health : MonoBehaviour
     //Variables
     public int health = 5;
     public int maxHealth = 5;
-
     public Image[] T_Health;
     public Image Heart1;
     public Image Heart2;
     public Image Heart3;
     public Image Heart4;
     public Image Heart5;
-
     public Sprite dHealth;
     public Sprite hHealth;
 
+
     //private CheckpointManager checkpointManager;
+    private bool isRespawning = false;
+
+    //public GameObject Death_Screen;
+
+
+    private CheckpointManager checkpointManager;
     private bool isRespawning = false;
 
     public void Start()
@@ -32,8 +37,14 @@ public class TEMP_Player_Health : MonoBehaviour
         T_Health[3] = Heart4;
         T_Health[4] = Heart5;
 
+
         //checkpointManager = CheckpointManager.Instance;
+
+        // Find the CheckpointManager
+        checkpointManager = CheckpointManager.Instance;
+
     }
+
     public void Update()
     {
         if (health <= 0 && !isRespawning)
@@ -42,8 +53,34 @@ public class TEMP_Player_Health : MonoBehaviour
             //Death_Screen.SetActive(true);
             Debug.Log("You dead");
 
+
             // Start death sequence
             //StartCoroutine(HandleDeath());
+
+            //SceneManager.LoadScene("Level1", LoadSceneMode.Single);
+
+            // Start death sequence
+            StartCoroutine(HandleDeath());
+        }
+    }
+
+    private IEnumerator HandleDeath()
+    {
+        // Short delay before respawning
+        yield return new WaitForSeconds(1.0f);
+
+        // Notify checkpoint manager
+        if (checkpointManager != null)
+        {
+            checkpointManager.PlayerDied();
+        }
+        else
+        {
+            Debug.LogError("CheckpointManager not found!");
+            // Fallback reset if no checkpoint manager
+            ResetHealth();
+            isRespawning = false;
+
         }
     }
     /*
@@ -69,17 +106,26 @@ public class TEMP_Player_Health : MonoBehaviour
 
     public void Damaged()
     {
-        T_Health[health - 1].sprite = dHealth;
-        health -= 1;
-        Debug.Log(health);
+        if (health > 0)
+        {
+            T_Health[health - 1].sprite = dHealth;
+            health -= 1;
+            Debug.Log("Health: " + health);
+        }
     }
 
     public void Healed()
     {
-        T_Health[health].sprite = hHealth;
-        health += 1;
-        Debug.Log(health);
+        if (health < maxHealth)
+        {
+            T_Health[health].sprite = hHealth;
+            health += 1;
+            Debug.Log("Health: " + health);
+        }
     }
+
+
+    // Called by CheckpointManager when respawning player
 
     public void ResetHealth()
     {

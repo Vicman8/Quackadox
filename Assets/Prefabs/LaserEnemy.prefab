@@ -101,7 +101,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e703bb027055fd44b75e3aa7cca74a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isMovingLaser: 0
+  movementRange: 0
+  speed: 0
   laserBeam: {fileID: 7116125014283926866}
+  moveInY: 0
 --- !u!1 &7116125014283926866
 GameObject:
   m_ObjectHideFlags: 0
@@ -250,3 +254,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  shouldPushPlayer: 1
+  Phealth: {fileID: 0}

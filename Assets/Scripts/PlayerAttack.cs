@@ -13,7 +13,9 @@ public class PlayerAttack : MonoBehaviour
     void Update()
     {
 
-                 if (Input.GetMouseButtonDown(0))
+
+        if (Input.GetMouseButtonDown(0))
+
         {
             Debug.Log("Melee Attack");
             PerformMeleeAttack();
@@ -22,6 +24,12 @@ public class PlayerAttack : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             Debug.Log("Long Range Attack");
+
+            PlayerMovement playerMovement = GetComponent<PlayerMovement>();
+            if (playerMovement != null)
+            {
+                playerMovement.PlayDuckQuackAnimation();
+            }
             PerformLongRangeAttack();
         }
         

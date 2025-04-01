@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    private Color originalBackgroundColor;
+
     private float horizontal;
     private float speed = 8f;
     private float jumpPower = 60f;
@@ -16,19 +18,52 @@ public class PlayerMovement : MonoBehaviour
     private float dashingTime = 0.2f;
     private float dashingCooldown = 1f;
 
+
     [SerializeField] public Rigidbody2D rb;
+
+    // Dash Charge System
+    private float maxDashCharge = 5f;
+    private float currentDashCharge = 5f;
+    private float dashRechargeRate = 1f;
+
+    [SerializeField] private Rigidbody2D rb;
+
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private TrailRenderer tr;
     [SerializeField] private Animator animator;
     [SerializeField] private GameObject portalPrefab;
 
+
     //UI stuff
     public UI_Controls UI;
 
     // Update is called once per frame
+
+    private bool isBeingPushed = false;
+    private float dashRechargeCooldownTimer = 0f;
+
+    void Start()
+    {
+        // Save the original background color when the game starts
+        originalBackgroundColor = Camera.main.backgroundColor;
+    }
+
+
     void Update()
     {
+        // Dash Charge Recharge
+        if (currentDashCharge < maxDashCharge)
+        {
+            currentDashCharge += dashRechargeRate * Time.deltaTime;
+            currentDashCharge = Mathf.Min(currentDashCharge, maxDashCharge);
+        }
+
+        if (dashRechargeCooldownTimer > 0)
+        {
+            dashRechargeCooldownTimer -= Time.deltaTime;
+        }
+
         if (isDashing)
         {
             return;
@@ -51,9 +86,11 @@ public class PlayerMovement : MonoBehaviour
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.5f);
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && UI.pauseState == 0)
+        // Trigger dash when Shift key is pressed
+        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && currentDashCharge > 0)
         {
             StartCoroutine(PortalDash());
+            animator.Play("DuckDash");
         }
 
         UpdateAnimationState();
@@ -62,11 +99,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (isDashing)
+        if (isDashing || isBeingPushed)
         {
             return;
         }
-
         rb.linearVelocity = new Vector2(horizontal * speed, rb.linearVelocity.y);
     }
 
@@ -79,7 +115,6 @@ public class PlayerMovement : MonoBehaviour
     {
         return horizontal;
     }
-
     private void Flip()
     {
         if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
@@ -95,22 +130,28 @@ public class PlayerMovement : MonoBehaviour
     {
         canDash = false;
         isDashing = true;
+        currentDashCharge -= 1f; // Deduct charge for each dash
+
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0f;
         rb.linearVelocity = new Vector2(transform.localScale.x * dashingPower, 0f);
         tr.emitting = true;
 
         Vector2 dashDirection = isFacingRight ? Vector2.right : Vector2.left;
+        float dashDistance = 5f;
 
         // Create entry portal farther from the player
-        Vector2 entryPosition = (Vector2)transform.position + dashDirection * 3f;
+        Vector2 entryPosition = (Vector2)transform.position + dashDirection * dashDistance;
         GameObject entryPortal = Instantiate(portalPrefab, entryPosition, Quaternion.identity);
 
         yield return new WaitForSeconds(0.1f);
 
         // Create exit portal
-        Vector2 exitPosition = entryPosition + dashDirection * 5f;
+        Vector2 exitPosition = entryPosition + dashDirection * dashDistance;
         GameObject exitPortal = Instantiate(portalPrefab, exitPosition, Quaternion.identity);
+
+        // Switch the world after the dash
+        SwitchWorld(); // Call world switch method here
 
         // Teleport player to exit portal
         transform.position = exitPosition;
@@ -120,7 +161,6 @@ public class PlayerMovement : MonoBehaviour
         rb.gravityScale = originalGravity;
         isDashing = false;
 
-        // Remove portals after dash
         Destroy(entryPortal);
         Destroy(exitPortal);
 
@@ -144,7 +184,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public Rigidbody2D getRB()
+    public Rigidbody2D GetRB()
     {
         return rb;
     }
@@ -152,5 +192,41 @@ public class PlayerMovement : MonoBehaviour
     public bool IsDashing()
     {
         return isDashing;
+    }
+
+    public bool GetPushed()
+    {
+        return isBeingPushed;
+    }
+
+    public void SetPushed(bool pushed)
+    {
+        isBeingPushed = pushed;
+    }
+
+    public void PlayDuckQuackAnimation()
+    {
+        if (animator != null)
+        {
+            animator.Play("DuckQuack");
+        }
+    }
+
+
+    private void SwitchWorld()
+    {
+        // Check if the world is currently in the altered state
+        if (Camera.main.backgroundColor == originalBackgroundColor)
+        {
+            // If it's the original color, switch to the new color (e.g., red)
+            Camera.main.backgroundColor = Color.red;
+            Debug.Log("World switched to red!");
+        }
+        else
+        {
+            // If it's already altered, switch back to the original color
+            Camera.main.backgroundColor = originalBackgroundColor;
+            Debug.Log("World switched back to the original state!");
+        }
     }
 }
