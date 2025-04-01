@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class TEMP_Player_Health : MonoBehaviour
 {
@@ -35,6 +36,7 @@ public class TEMP_Player_Health : MonoBehaviour
         {
             //Death_Screen.SetActive(true);
             Debug.Log("You dead");
+            SceneManager.LoadScene("Level1", LoadSceneMode.Single);
         }
     }
 

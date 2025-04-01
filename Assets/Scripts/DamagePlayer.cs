@@ -37,7 +37,7 @@ public class DamagePlayer : MonoBehaviour
             }
 
             //Brian's addition for UI testing
-            //Phealth.Damaged();
+            Phealth.Damaged();
         }
     }
 
