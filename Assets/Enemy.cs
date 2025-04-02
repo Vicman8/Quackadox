@@ -38,7 +38,7 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
-        Debug.Log(GuardState);
+        //Debug.Log(GuardState);
         
         if (GuardState == 0)
         {
@@ -102,28 +102,28 @@ public class Enemy : MonoBehaviour
             Vector3 localScale = transform.localScale;
             localScale.x = 1.25f;
             transform.localScale = localScale;
-            //Flip();
-            //EnemyA.Flip();
+            Debug.Log("right");
 
         }
-        else
+        else if (currentPoint == PointA.transform)
         {
             rb.linearVelocity = new Vector2(-speed, 0);
             Vector3 localScale = transform.localScale;
             localScale.x = -1.25f;
             transform.localScale = localScale;
-            //EnemyA.Flip();
-            //Flip();
+            Debug.Log("left");
         }
 
 
         if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == PointB.transform)
         {
+            Debug.Log("going left");
             currentPoint = PointA.transform;
         }
 
         if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == PointA.transform)
         {
+            Debug.Log("going right");
             currentPoint = PointB.transform;
         }
     }

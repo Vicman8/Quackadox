@@ -14,10 +14,10 @@ public class Enemy_Detection : MonoBehaviour
             countDown = countDown - 1 * Time.deltaTime;
             //Debug.Log("The duckkkk");
         }
-        else if (!Detect && enemy.GuardState != 0)
+        else if (!Detect)
         {
             countDown = 4;
-            enemy.GuardState = 2;
+            enemy.GuardState = 0;
             //Debug.Log("huh, where is duck");
         }
 
