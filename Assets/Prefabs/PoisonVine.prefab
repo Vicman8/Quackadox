@@ -154,5 +154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  playerRB: {fileID: 0}
   shouldPushPlayer: 1
   Phealth: {fileID: 0}
+  damageCooldown: 0.5

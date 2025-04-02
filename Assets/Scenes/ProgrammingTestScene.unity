@@ -1329,6 +1329,7 @@ MonoBehaviour:
   speed: 0.1
   movementRange: 5
   moveInY: 0
+  player: {fileID: 0}
 --- !u!61 &1611784702
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1698,7 +1699,7 @@ Transform:
   m_GameObject: {fileID: 1851542591}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15.2228, y: -1.1472, z: 0}
+  m_LocalPosition: {x: -0.85, y: -1.1472, z: 0}
   m_LocalScale: {x: 3.1335037, y: 2.8187866, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2649,6 +2650,10 @@ PrefabInstance:
       propertyPath: Phealth
       value: 
       objectReference: {fileID: 1851542600}
+    - target: {fileID: 6834357090995391599, guid: f67cfef002616c143869badab15a06ce, type: 3}
+      propertyPath: playerRB
+      value: 
+      objectReference: {fileID: 1851542594}
     - target: {fileID: 7116125014283926866, guid: f67cfef002616c143869badab15a06ce, type: 3}
       propertyPath: m_IsActive
       value: 0

@@ -4,17 +4,36 @@ using System.Collections;
 public class DamagePlayer : MonoBehaviour
 {
     [SerializeField] private GameObject player;
-    private Rigidbody2D playerRB;
+    public Rigidbody2D playerRB;
     [SerializeField] private bool shouldPushPlayer;
 
     //brian's addition for UI testing
     public TEMP_Player_Health Phealth;
 
+    private bool playerDamaged;
+    [SerializeField] private float damageCooldown;
+    private float damageCountdown;
+
     void Start()
     {
         playerRB = player.GetComponent<PlayerMovement>().GetRB();
+        playerDamaged = false;
+        damageCountdown = 0;
     }
-    
+
+    void Update()
+    {
+        if(damageCountdown > 0)
+        {
+            damageCountdown -= Time.deltaTime;
+        }
+        
+        if(damageCountdown <= 0)
+        {
+            playerDamaged = false;
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collider)
     {
         if(collider.gameObject == player)
@@ -29,20 +48,28 @@ public class DamagePlayer : MonoBehaviour
                 float movementDirection = player.GetComponent<PlayerMovement>().GetHorizontal();
                 if (movementDirection < 0)
                 {
-                    playerRB.linearVelocity = new Vector3(45f, 0f, 0f);
+                    playerRB.linearVelocity = new Vector3(50f, 0f, 0f);
                     Debug.Log("Movement is negative");
+                    Debug.Log(playerRB.linearVelocity);
                     StartCoroutine(ChangeExternalVelocityRight());
                 }
                 else
                 {
-                    playerRB.linearVelocity = new Vector3(-45f, 0f, 0f);
+                    playerRB.linearVelocity = new Vector3(-50f, 0f, 0f);
+                    Debug.Log(playerRB.linearVelocity);
                     Debug.Log("Movement is positive or zero");
                     StartCoroutine(ChangeExternalVelocityLeft());
                 }
             }
 
             //Brian's addition for UI testing
-            Phealth.Damaged();
+            if(!playerDamaged)
+            {
+                Phealth.Damaged();
+                Debug.Log("Take damage");
+                playerDamaged = true;
+                damageCountdown = damageCooldown;
+            }
         }
     }
 
@@ -52,6 +79,7 @@ public class DamagePlayer : MonoBehaviour
         {
             playerRB.linearVelocity = new Vector3(playerRB.linearVelocity.x - 5f, 0f, 0f);
             Debug.Log("Zeroing velocity right");
+            Debug.Log(playerRB.linearVelocity);
             yield return null;
         }
 
@@ -66,6 +94,7 @@ public class DamagePlayer : MonoBehaviour
         {
             playerRB.linearVelocity = new Vector3(playerRB.linearVelocity.x + 5f, 0f, 0f);
             Debug.Log("Zeroing velocity left");
+            Debug.Log(playerRB.linearVelocity);
             yield return null;
         }
 

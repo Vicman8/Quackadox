@@ -42,6 +42,8 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isBeingPushed = false;
     private float dashRechargeCooldownTimer = 0f;
+    private float platformSpeed;
+    private bool playerOnPlatform = false;
 
     void Start()
     {
@@ -101,9 +103,22 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isDashing || isBeingPushed)
         {
+            Debug.Log("Return");
             return;
         }
-        rb.linearVelocity = new Vector2(horizontal * speed, rb.linearVelocity.y);
+
+        if(!playerOnPlatform)
+        {
+            rb.linearVelocity = new Vector2(horizontal * speed, rb.linearVelocity.y);
+        }
+        else if(horizontal != 0)
+        {
+            rb.linearVelocity = new Vector2(horizontal * speed, rb.linearVelocity.y);
+        }
+        else
+        {
+            rb.linearVelocity = new Vector2(platformSpeed, rb.linearVelocity.y);
+        }
     }
 
     public bool IsGrounded()
@@ -228,5 +243,11 @@ public class PlayerMovement : MonoBehaviour
             Camera.main.backgroundColor = originalBackgroundColor;
             Debug.Log("World switched back to the original state!");
         }
+    }
+
+    public void PlayerFollowPlatform(bool isOnPlatform, float speed)
+    { 
+        playerOnPlatform = isOnPlatform;
+        platformSpeed = speed;
     }
 }
