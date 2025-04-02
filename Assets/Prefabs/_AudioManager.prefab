@@ -1,0 +1,83 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7680183507385205946
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 343111366711941868}
+  - component: {fileID: 1902246819773289221}
+  m_Layer: 0
+  m_Name: _AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &343111366711941868
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7680183507385205946}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -8.407169, y: -3.4089332, z: 5.859953}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1902246819773289221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7680183507385205946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e77e3666614537943b9079e05fb7a86f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: TitleScreen
+    clip: {fileID: 8300000, guid: aca57425d4deef74c955d4a747da0e29, type: 3}
+    volume: 0.336
+    pitch: 0
+    loop: 1
+    source: {fileID: 0}
+  - name: Jump
+    clip: {fileID: 8300000, guid: 542da82674608fa488ceaaf0997c0e1d, type: 3}
+    volume: 0.75
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: WalkHigh
+    clip: {fileID: 8300000, guid: b7bcc8fadb5da244a9b5a65793d96a62, type: 3}
+    volume: 0.75
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: WalkLow
+    clip: {fileID: 8300000, guid: 0985c4707e5d04c4ba4906ba0cc60f02, type: 3}
+    volume: 0.75
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Dash
+    clip: {fileID: 8300000, guid: a0783868f22c6a84ea02d46d477ad8ac, type: 3}
+    volume: 0.75
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Dash
+    clip: {fileID: 8300000, guid: a0783868f22c6a84ea02d46d477ad8ac, type: 3}
+    volume: 0.75
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
