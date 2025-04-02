@@ -2344,6 +2344,7 @@ GameObject:
   - component: {fileID: 2082138338}
   - component: {fileID: 2082138337}
   - component: {fileID: 2082138336}
+  - component: {fileID: 2082138339}
   m_Layer: 0
   m_Name: The_Enemy
   m_TagString: Untagged
@@ -2513,6 +2514,19 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &2082138339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2082138333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0e4c7511cf97964f872fee1aa56c0a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 2
 --- !u!1001 &3348138370300731888
 PrefabInstance:
   m_ObjectHideFlags: 0
