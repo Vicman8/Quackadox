@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
 {
     public GameObject PointA;
     public GameObject PointB;
+    public GameObject ReturnPoint;
     private Rigidbody2D rb;
     private Transform currentPoint;
     public float speed;
@@ -15,6 +16,10 @@ public class Enemy : MonoBehaviour
     public Transform PlayerPoint;
 
     public bool Guarding;
+    public bool AtGuardPoint;
+
+    public float GuardState = 0; 
+    //0 = guarding, 1 = following player, 2 = returning to post
     
 
     //public EnemyAttack EnemyA;
@@ -26,28 +31,46 @@ public class Enemy : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         currentPoint = PointB.transform;
         Guarding = true;
+        AtGuardPoint = true;
 
     }
 
     // Update is called once per frame
     public void Update()
     {
-        if (Guarding)
+        //Debug.Log(GuardState);
+        
+        if (GuardState == 0)
         {
             Guard();
-        }
-        else if (!Guarding)
+        } 
+        else if (GuardState == 1)
         {
             FollowPlayer();
         }
-
-        
-
+        else if (GuardState == 2)
+        {
+            Return();
+        }
+        /*
+        if (Guarding && AtGuardPoint)
+        {
+            Guard();
+        }
+        else if (!Guarding && !AtGuardPoint)
+        {
+            Return();
+        } 
+        else if (!Guarding && AtGuardPoint)
+        {
+            FollowPlayer();
+        }
+        */
     }
 
-    public void FollowPlayer()
+    private void FollowPlayer()
     {
-        //Guarding = false;
+        
         Vector3 direction = (PlayerPoint.position - transform.position).normalized;
         direction.y = 0f; // Lock movement on Y-axis
 
@@ -70,39 +93,51 @@ public class Enemy : MonoBehaviour
 
     public void Guard()
     {
+        //Debug.Log("guarding");
         //Guarding = true;
-        Vector2 point = currentPoint.position - transform.position;
+        //Vector2 point = currentPoint.position - transform.position;
         if (currentPoint == PointB.transform)
         {
             rb.linearVelocity = new Vector2(speed, 0);
             Vector3 localScale = transform.localScale;
             localScale.x = 1.25f;
             transform.localScale = localScale;
-            //Flip();
-            //EnemyA.Flip();
+            Debug.Log("right");
 
         }
-        else
+        else if (currentPoint == PointA.transform)
         {
             rb.linearVelocity = new Vector2(-speed, 0);
             Vector3 localScale = transform.localScale;
             localScale.x = -1.25f;
             transform.localScale = localScale;
-            //EnemyA.Flip();
-            //Flip();
+            Debug.Log("left");
         }
 
 
         if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == PointB.transform)
         {
+            Debug.Log("going left");
             currentPoint = PointA.transform;
         }
 
         if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == PointA.transform)
         {
+            Debug.Log("going right");
             currentPoint = PointB.transform;
         }
     }
+
+    private void Return()
+    {
+        Debug.Log("Return");
+        Vector3 direction = (ReturnPoint.transform.position - currentPoint.position) .normalized;
+        
+        // Set the velocity in the direction of the target
+        rb.linearVelocity = direction * speed;
+        //GuardState = 0;
+    }
+
 
     /*
 

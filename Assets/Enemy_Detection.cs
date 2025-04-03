@@ -9,8 +9,6 @@ public class Enemy_Detection : MonoBehaviour
 
     public void Update()
     {
-
-
         if (Detect)
         {
             countDown = countDown - 1 * Time.deltaTime;
@@ -19,8 +17,7 @@ public class Enemy_Detection : MonoBehaviour
         else if (!Detect)
         {
             countDown = 4;
-            //enemy.Guard();
-            enemy.Guarding = true;
+            enemy.GuardState = 0;
             //Debug.Log("huh, where is duck");
         }
 
@@ -28,17 +25,14 @@ public class Enemy_Detection : MonoBehaviour
         {
             Detect = false;
         }
-
-
-        //countDown = countDown - 1 * Time.deltaTime;
-        //Debug.Log($"{countDown}");
     }
 
-    public void OnTriggerEnter2D(Collider2D collision)
+    public void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        if(collision.gameObject.CompareTag("Player"))
         {
-            enemy.Guarding = false;
+            //enemy.Guarding = false;
+            enemy.GuardState = 1;
             Detect = true;
             //Debug.Log("THE DUCK");
         }
