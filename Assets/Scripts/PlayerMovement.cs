@@ -19,15 +19,18 @@ public class PlayerMovement : MonoBehaviour
     private float dashingCooldown = 1f;
 
 
-    [SerializeField] public Rigidbody2D rb;
-
     // Dash Charge System
     private float maxDashCharge = 5f;
     private float currentDashCharge = 5f;
     private float dashRechargeRate = 1f;
 
+    // Level Switching
+    private bool isInAlternateLevel = false;
+    [SerializeField] private Vector2 levelOffset = new Vector2(0f, -100f); // adjust this offset to match distance between levels
+    private Vector2 originalLevelPosition;
 
 
+    [SerializeField] public Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private TrailRenderer tr;
@@ -49,6 +52,7 @@ public class PlayerMovement : MonoBehaviour
     {
         // Save the original background color when the game starts
         originalBackgroundColor = Camera.main.backgroundColor;
+        originalLevelPosition = transform.position;
     }
 
 
@@ -149,7 +153,7 @@ public class PlayerMovement : MonoBehaviour
 
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0f;
-        rb.linearVelocity = new Vector2(transform.localScale.x * dashingPower, 0f);
+        rb.linearVelocity = Vector2.zero;
         tr.emitting = true;
 
         Vector2 dashDirection = isFacingRight ? Vector2.right : Vector2.left;
@@ -165,11 +169,21 @@ public class PlayerMovement : MonoBehaviour
         Vector2 exitPosition = entryPosition + dashDirection * dashDistance;
         GameObject exitPortal = Instantiate(portalPrefab, exitPosition, Quaternion.identity);
 
+        // Store current position before switch
+        if (!isInAlternateLevel)
+        {
+            originalLevelPosition = transform.position;
+            transform.position = (Vector2)transform.position + levelOffset;
+        }
+        else
+        {
+            transform.position = originalLevelPosition;
+        }
+
+        isInAlternateLevel = !isInAlternateLevel;
+
         // Switch the world after the dash
         SwitchWorld(); // Call world switch method here
-
-        // Teleport player to exit portal
-        transform.position = exitPosition;
 
         yield return new WaitForSeconds(dashingTime);
         tr.emitting = false;
