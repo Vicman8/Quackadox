@@ -248,7 +248,7 @@ public class PlayerMovement : MonoBehaviour
         if (Camera.main.backgroundColor == originalBackgroundColor)
         {
             // If it's the original color, switch to the new color (e.g., red)
-            Camera.main.backgroundColor = Color.red;
+            Camera.main.backgroundColor = Color.magenta;
             Debug.Log("World switched to red!");
         }
         else
