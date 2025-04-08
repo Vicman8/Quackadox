@@ -235,7 +235,7 @@ TextureImporter:
         serializedVersion: 2
         x: 68
         y: 0
-        width: 16
+        width: 17
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -345,7 +345,7 @@ TextureImporter:
         serializedVersion: 2
         x: 154
         y: 0
-        width: 15
+        width: 16
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -367,7 +367,7 @@ TextureImporter:
         serializedVersion: 2
         x: 171
         y: 0
-        width: 15
+        width: 16
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -387,9 +387,9 @@ TextureImporter:
       name: Tilesheet_quackadox-V.1.0_11
       rect:
         serializedVersion: 2
-        x: 187
+        x: 186
         y: 0
-        width: 15
+        width: 16
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -409,9 +409,9 @@ TextureImporter:
       name: Tilesheet_quackadox-V.1.0_12
       rect:
         serializedVersion: 2
-        x: 204
+        x: 203
         y: 0
-        width: 15
+        width: 16
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -433,7 +433,7 @@ TextureImporter:
         serializedVersion: 2
         x: 222
         y: 0
-        width: 15
+        width: 16
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -453,9 +453,9 @@ TextureImporter:
       name: Tilesheet_quackadox-V.1.0_14
       rect:
         serializedVersion: 2
-        x: 238
+        x: 237
         y: 0
-        width: 15
+        width: 16
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
