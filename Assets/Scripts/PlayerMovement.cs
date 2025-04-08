@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isFacingRight = true;
 
     //Dashing
-    private bool canDash = true;
+    private bool canDash = false;
     private bool isDashing;
     private float dashingPower = 5f;
     private float dashingTime = 0.2f;
@@ -95,8 +95,11 @@ public class PlayerMovement : MonoBehaviour
         // Trigger dash when Shift key is pressed
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && currentDashCharge > 0)
         {
-            StartCoroutine(PortalDash());
-            animator.Play("DuckDash");
+            if(canDash)
+            {
+                StartCoroutine(PortalDash());
+                animator.Play("DuckDash");
+            }
         }
 
         UpdateAnimationState();
@@ -263,5 +266,10 @@ public class PlayerMovement : MonoBehaviour
     { 
         playerOnPlatform = isOnPlatform;
         platformSpeed = speed;
+    }
+
+    public void SetDashUnlocked(bool unlocked)
+    {
+        canDash = unlocked;
     }
 }
