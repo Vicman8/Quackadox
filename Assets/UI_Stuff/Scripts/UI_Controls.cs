@@ -4,9 +4,9 @@ using UnityEngine.SceneManagement;
 
 public class UI_Controls : MonoBehaviour
 {
-    public GameObject PauseMenu;
-    private Boolean IsPaused;
-    public float pauseState = 0;
+    public GameObject PauseMenu; //This is for the PauseMenu gameObject
+    private Boolean IsPaused; //Status of the game
+    public float pauseState = 0; //This is used for the player movement script to stop any player movement
     public void Start()
     {
         Continue();
