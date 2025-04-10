@@ -38,8 +38,8 @@ public class DamagePlayer : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        Debug.Log(collider.gameObject);
-        if(collider.gameObject == player)
+        Debug.Log("DAMAGE COLLISION: " + collider.gameObject);
+        if(collider.gameObject == player && !playerDamaged)
         {
             Debug.Log("OW!");
             sounds.Play("Damage");
@@ -65,15 +65,10 @@ public class DamagePlayer : MonoBehaviour
                     StartCoroutine(ChangeExternalVelocityLeft());
                 }
             }
-
-            //Brian's addition for UI testing
-            if(!playerDamaged)
-            {
                 Phealth.Damaged();
                 Debug.Log("Take damage");
                 playerDamaged = true;
                 damageCountdown = damageCooldown;
-            }
         }
     }
 

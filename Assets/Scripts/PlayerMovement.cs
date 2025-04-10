@@ -310,4 +310,9 @@ public class PlayerMovement : MonoBehaviour
     {
         canDash = unlocked;
     }
+
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        Debug.Log("COLLIDING: " + collider.gameObject);
+    }
 }
