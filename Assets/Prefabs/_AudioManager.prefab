@@ -47,37 +47,55 @@ MonoBehaviour:
   sounds:
   - name: TitleScreen
     clip: {fileID: 8300000, guid: aca57425d4deef74c955d4a747da0e29, type: 3}
-    volume: 0.336
-    pitch: 0
+    volume: 0.35
+    pitch: 1
     loop: 1
     source: {fileID: 0}
   - name: Jump
     clip: {fileID: 8300000, guid: 542da82674608fa488ceaaf0997c0e1d, type: 3}
     volume: 0.75
-    pitch: 0
+    pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: WalkHigh
     clip: {fileID: 8300000, guid: b7bcc8fadb5da244a9b5a65793d96a62, type: 3}
     volume: 0.75
-    pitch: 0
+    pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: WalkLow
     clip: {fileID: 8300000, guid: 0985c4707e5d04c4ba4906ba0cc60f02, type: 3}
     volume: 0.75
-    pitch: 0
+    pitch: 1
     loop: 0
     source: {fileID: 0}
   - name: Dash
     clip: {fileID: 8300000, guid: a0783868f22c6a84ea02d46d477ad8ac, type: 3}
     volume: 0.75
-    pitch: 0
+    pitch: 1
     loop: 0
     source: {fileID: 0}
-  - name: Dash
-    clip: {fileID: 8300000, guid: a0783868f22c6a84ea02d46d477ad8ac, type: 3}
+  - name: DialogProgress
+    clip: {fileID: 8300000, guid: fdb00be8a62039e42be8119073df5fdd, type: 3}
     volume: 0.75
-    pitch: 0
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: MenuEnter
+    clip: {fileID: 8300000, guid: 4903a1f8d68d06f47ae4905ef173b49d, type: 3}
+    volume: 0.75
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: MenuExit
+    clip: {fileID: 8300000, guid: a7aa84802cb6ef543822cac6706affbd, type: 3}
+    volume: 0.75
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Damage
+    clip: {fileID: 8300000, guid: bd3a84e6adcaab24d8e3d0765a00024a, type: 3}
+    volume: 0.75
+    pitch: 1
     loop: 0
     source: {fileID: 0}

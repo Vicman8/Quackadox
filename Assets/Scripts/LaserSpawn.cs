@@ -10,6 +10,7 @@ public class LaserSpawn : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private GameObject laserBeam;
     [SerializeField] private bool moveInY;
+    [SerializeField] private bool laserStaysOn;
     private Vector3 startingPosition;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -23,19 +24,27 @@ public class LaserSpawn : MonoBehaviour
         {
             movementRange = 0 - movementRange;
         }
+
+        if(laserStaysOn)
+        {
+            laserBeam.SetActive(true);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (timer <= 0)
+        if (!laserStaysOn && timer <= 0)
         {
             laserBeam.SetActive(!isActive);
             isActive = !isActive;
             timer = laserActivationTime;
         }
 
-        timer -= Time.deltaTime;
+        if(!laserStaysOn)
+        { 
+            timer -= Time.deltaTime;
+        }
 
         if (isMovingLaser && !moveInY)
         {
@@ -44,7 +53,7 @@ public class LaserSpawn : MonoBehaviour
                 speed = -speed;
             }
 
-            this.transform.position = new Vector3(this.transform.position.x + speed, this.transform.position.y, this.transform.position.z);
+            this.transform.position = new Vector3(this.transform.position.x + speed * Time.deltaTime, this.transform.position.y, this.transform.position.z);
         }
         else if(isMovingLaser)
         {
@@ -53,7 +62,7 @@ public class LaserSpawn : MonoBehaviour
                 speed = -speed;
             }
 
-            this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + speed, this.transform.position.z);
+            this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + speed * Time.deltaTime, this.transform.position.z);
         }
     }
 }

@@ -1,57 +1,58 @@
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEditor.Searcher.SearcherWindow.Alignment;
-using static UnityEngine.GraphicsBuffer;
-
 public class Enemy : MonoBehaviour
 {
+    //The two point in which the enemy patrol in between
     public GameObject PointA;
     public GameObject PointB;
+    //the point that the enemy returns to when left it's main post
+    public GameObject ReturnPoint;
     private Rigidbody2D rb;
+    //see what point the enemy is going to. for the guard function
     private Transform currentPoint;
+    //speed for the enemy 
     public float speed;
-
+    //the position of the player
     public Transform PlayerPoint;
+    //indicates what the enemy will be doing. 0 = guarding, 1 = follow the player, and 2 is returning
+    public float GuardState; 
+    //for the return function
+    public float stopDistance = 0.1f;
 
-    public bool Guarding;
-    
-
-    //public EnemyAttack EnemyA;
-
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         currentPoint = PointB.transform;
-        Guarding = true;
+        GuardState = 0;
 
     }
 
     // Update is called once per frame
     public void Update()
     {
-        if (Guarding)
+        //this will indicate what state the enemy will be in. it will call the function depending on the state
+        if (GuardState == 0)
         {
             Guard();
-        }
-        else if (!Guarding)
+        } 
+        else if (Mathf.Approximately(GuardState, 1))
         {
             FollowPlayer();
         }
-
-        
+        else if (Mathf.Approximately(GuardState, 2))
+        {
+            Return();
+        }
 
     }
 
-    public void FollowPlayer()
+    //This function will use the position of the player and goes towards it
+    private void FollowPlayer()
     {
-        //Guarding = false;
+        
         Vector3 direction = (PlayerPoint.position - transform.position).normalized;
-        direction.y = 0f; // Lock movement on Y-axis
+        direction.y = 0f; 
 
-        // Apply velocity with X-axis movement only
+      
         rb.linearVelocity = new Vector3(direction.x * speed, rb.linearVelocity.y, 0f);
         if(direction.x > 0)
         {
@@ -65,54 +66,73 @@ public class Enemy : MonoBehaviour
             localScale.x = -1.25f;
             transform.localScale = localScale;
         }
-        Debug.Log(direction.x);
+
     }
 
+    //the enemy will go in between the two points (a and b)
     public void Guard()
     {
-        //Guarding = true;
-        Vector2 point = currentPoint.position - transform.position;
+
         if (currentPoint == PointB.transform)
         {
             rb.linearVelocity = new Vector2(speed, 0);
             Vector3 localScale = transform.localScale;
             localScale.x = 1.25f;
             transform.localScale = localScale;
-            //Flip();
-            //EnemyA.Flip();
+            //Debug.Log("right");
 
         }
-        else
+        else if (currentPoint == PointA.transform)
         {
             rb.linearVelocity = new Vector2(-speed, 0);
             Vector3 localScale = transform.localScale;
             localScale.x = -1.25f;
             transform.localScale = localScale;
-            //EnemyA.Flip();
-            //Flip();
+            //Debug.Log("left");
         }
 
 
         if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == PointB.transform)
         {
+            Debug.Log("going left");
             currentPoint = PointA.transform;
         }
 
         if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == PointA.transform)
         {
+            Debug.Log("going right");
             currentPoint = PointB.transform;
         }
     }
 
-    /*
-
-    private void Flip()
+    //the enemy if gone to far from its original place will go back to the point in that area.
+    private void Return()
     {
-            Vector3 localScale = transform.localScale;
-            localScale.x *= -1f;
-            transform.localScale = localScale;
+        Debug.Log("Return");
+        Vector2 targetPosition = ReturnPoint.transform.position;
         
+        if (Vector2.Distance(transform.position, targetPosition) > stopDistance && transform.position.x > 0)
+        {
+       
+            transform.position = Vector2.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+            Vector3 localScale = transform.localScale;
+            localScale.x = -1.25f;
+            transform.localScale = localScale;
+        }
+        else if (Vector2.Distance(transform.position, targetPosition) > stopDistance && transform.position.x < 0)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+            Vector3 localScale = transform.localScale;
+            localScale.x = 1.25f;
+            transform.localScale = localScale;
+        }
+        else
+        {
+          
+            GuardState = 0;
+            Debug.Log("im back");
+            
+        }
     }
 
-    */
 }
