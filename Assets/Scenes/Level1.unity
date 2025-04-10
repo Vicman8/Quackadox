@@ -23992,9 +23992,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1851542601}
     - target: {fileID: 5679062358442301834, guid: bcbee26e98d0e2c48b01ff981a7b6467, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1851542591}
+    - target: {fileID: 5679062358442301834, guid: bcbee26e98d0e2c48b01ff981a7b6467, type: 3}
       propertyPath: sounds
       value: 
       objectReference: {fileID: 1487908299}
+    - target: {fileID: 5679062358442301834, guid: bcbee26e98d0e2c48b01ff981a7b6467, type: 3}
+      propertyPath: Phealth
+      value: 
+      objectReference: {fileID: 1851542600}
     - target: {fileID: 8388778438304021756, guid: bcbee26e98d0e2c48b01ff981a7b6467, type: 3}
       propertyPath: m_Name
       value: Enemy_V1 (1)
@@ -24003,7 +24011,8 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8590140500775446829, guid: bcbee26e98d0e2c48b01ff981a7b6467, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
