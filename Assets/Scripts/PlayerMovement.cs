@@ -133,7 +133,7 @@ public class PlayerMovement : MonoBehaviour
         // Trigger dash when Shift key is pressed
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && currentDashCharge > 0)
         {
-            if(canDash)
+            if (canDash)
             {
                 StartCoroutine(PortalDash());
                 animator.Play("DuckDash");
@@ -152,11 +152,11 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        if(!playerOnPlatform)
+        if (!playerOnPlatform)
         {
             rb.linearVelocity = new Vector2(horizontal * speed, rb.linearVelocity.y);
         }
-        else if(horizontal != 0)
+        else if (horizontal != 0)
         {
             rb.linearVelocity = new Vector2(horizontal * speed, rb.linearVelocity.y);
         }
@@ -194,47 +194,78 @@ public class PlayerMovement : MonoBehaviour
 
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0f;
-        rb.linearVelocity = Vector2.zero;
-        tr.emitting = true;
+        rb.linearVelocity = Vector2.zero; // Stop the player before the dash
+        tr.emitting = true; // Trail effect starts
 
+        // Dash direction based on facing
         Vector2 dashDirection = isFacingRight ? Vector2.right : Vector2.left;
         float dashDistance = 5f;
 
-        // Create entry portal farther from the player
+        // Instantiate the portal sprite and start animation
         Vector2 entryPosition = (Vector2)transform.position + dashDirection * dashDistance;
+        Vector2 returnExitPosition = (Vector2)transform.position + dashDirection * 1.5f;  // Adjusting the offset if necessary
+
+        // Debug log for positions
+        Debug.Log("Entry Position: " + entryPosition);
+        Debug.Log("Return Exit Position: " + returnExitPosition);
+
+        // Instantiate entry portal at the entry position
         GameObject entryPortal = Instantiate(portalPrefab, entryPosition, Quaternion.identity);
+        Animator portalAnimator = entryPortal.GetComponent<Animator>();
+        portalAnimator.Play("Portal"); // Play the "portal" animation for entry
 
-        yield return new WaitForSeconds(0.1f);
+        // Wait before moving forward to give time for portal animation
+        float portalAnimationTime = 1f;  // Time in seconds to let the portal animation play before moving forward
+        yield return new WaitForSeconds(portalAnimationTime);
 
-        // Create exit portal
-        Vector2 exitPosition = entryPosition + dashDirection * dashDistance;
-        GameObject exitPortal = Instantiate(portalPrefab, exitPosition, Quaternion.identity);
+        // Dash forward (move the player to the portal)
+        float dashSpeed = 5f;  // Dash speed (you can adjust this to make it slower or faster)
+        float dashDuration = 1f;  // Time to move forward into the portal
 
-        // Store current position before switch
+        Vector2 targetPosition = (Vector2)transform.position + dashDirection * dashDistance;
+        float timeElapsed = 0f;
+
+        while (timeElapsed < dashDuration)
+        {
+            transform.position = Vector2.Lerp(transform.position, targetPosition, timeElapsed / dashDuration);
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.position = targetPosition; // Ensure we exactly reach the target position
+
+        // After moving to the portal, create the exit portal
+        GameObject exitPortal = Instantiate(portalPrefab, returnExitPosition, Quaternion.identity);
+        portalAnimator = exitPortal.GetComponent<Animator>();
+        portalAnimator.Play("Portal"); // Play the same "portal" animation for the exit portal
+
+        // Teleport player to the "other world"
         if (!isInAlternateLevel)
         {
-            originalLevelPosition = transform.position;
+            originalLevelPosition = transform.position; // Save original position
             transform.position = (Vector2)transform.position + levelOffset;
         }
         else
         {
-            transform.position = originalLevelPosition;
+            transform.position = originalLevelPosition; // Go back to original level
         }
 
         isInAlternateLevel = !isInAlternateLevel;
 
-        // Switch the world after the dash
-        SwitchWorld(); // Call world switch method here
+        // Optional: Switch world colors or background
+        SwitchWorld();
 
-        yield return new WaitForSeconds(dashingTime);
-        tr.emitting = false;
+        // Wait for player to enter the portal before continuing (sync with animation)
+        yield return new WaitForSeconds(dashingTime); // Wait for dash animation to finish
+        tr.emitting = false; // Stop the trail effect
         rb.gravityScale = originalGravity;
         isDashing = false;
 
+        // Destroy portals after the dash
         Destroy(entryPortal);
         Destroy(exitPortal);
 
-        yield return new WaitForSeconds(dashingCooldown);
+        yield return new WaitForSeconds(dashingCooldown); // Dash cooldown
         canDash = true;
     }
 
@@ -301,7 +332,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public void PlayerFollowPlatform(bool isOnPlatform, float speed)
-    { 
+    {
         playerOnPlatform = isOnPlatform;
         platformSpeed = speed;
     }
