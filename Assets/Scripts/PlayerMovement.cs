@@ -6,6 +6,10 @@ public class PlayerMovement : MonoBehaviour
 {
     private Color originalBackgroundColor;
 
+    //Walk sound
+    private float walkSoundToggleTimer = 0f;
+    private bool playHighSound = true;
+
     private float horizontal;
     private float speed = 8f;
     private float jumpPower = 60f;
@@ -48,6 +52,7 @@ public class PlayerMovement : MonoBehaviour
     private float platformSpeed;
     private bool playerOnPlatform = false;
 
+    [SerializeField] private AudioManager audioManager;
     void Start()
     {
         // Save the original background color when the game starts
@@ -78,13 +83,46 @@ public class PlayerMovement : MonoBehaviour
         if (UI.pauseState == 0)
         {
             horizontal = Input.GetAxisRaw("Horizontal");
+
+            // Toggle walking sound
+            if (horizontal != 0)
+            {
+                walkSoundToggleTimer -= Time.deltaTime;
+
+                // Alternate the sound based on a timer or movement
+                if (walkSoundToggleTimer <= 0f)
+                {
+                    if (playHighSound)
+                    {
+                        FindObjectOfType<AudioManager>().Play("WalkHigh");
+                    }
+                    else
+                    {
+                        FindObjectOfType<AudioManager>().Play("WalkLow");
+                    }
+
+                    // Toggle sound
+                    playHighSound = !playHighSound;
+
+                    // Reset the timer to control how fast it alternates (example: every 0.5 seconds)
+                    walkSoundToggleTimer = 0.5f;
+                }
+            }
+            else
+            {
+                // Stop both sounds when not moving
+                walkSoundToggleTimer = 0f;  // Reset timer when player stops moving
+            }
         }
+
 
         // Jumping
         if (Input.GetKeyDown(KeyCode.Space) && IsGrounded() && UI.pauseState == 0)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPower);
             animator.Play("DuckJump");
+            FindObjectOfType<AudioManager>().Play("Jump");
+
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && rb.linearVelocity.y > 0f)
