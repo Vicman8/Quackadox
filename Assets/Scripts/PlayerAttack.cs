@@ -13,14 +13,6 @@ public class PlayerAttack : MonoBehaviour
     void Update()
     {
 
-
-        if (Input.GetMouseButtonDown(0))
-
-        {
-            Debug.Log("Melee Attack");
-            PerformMeleeAttack();
-        }
-
         if (Input.GetMouseButtonDown(1))
         {
             Debug.Log("Long Range Attack");
@@ -29,15 +21,11 @@ public class PlayerAttack : MonoBehaviour
             if (playerMovement != null)
             {
                 playerMovement.PlayDuckQuackAnimation();
+                Debug.Log("AnimationQuack");
             }
             PerformLongRangeAttack();
         }
         
-    }
-
-    void PerformMeleeAttack()
-    {
-        // Handle melee attack logic here (can use hitboxes or range checks)
     }
 
     void PerformLongRangeAttack()
