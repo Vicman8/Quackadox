@@ -254,8 +254,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 015088fa684409941a5f9af6779d22b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 7227537489646285069, guid: ef89d0d536e8bb94e89cb641e3ade159, type: 3}
+  player: {fileID: 860316407257799661, guid: ef89d0d536e8bb94e89cb641e3ade159, type: 3}
   playerRB: {fileID: 0}
   shouldPushPlayer: 1
-  Phealth: {fileID: 456450027321374953, guid: ef89d0d536e8bb94e89cb641e3ade159, type: 3}
+  Phealth: {fileID: 140342457532025602, guid: ef89d0d536e8bb94e89cb641e3ade159, type: 3}
   damageCooldown: 0.5
+  sounds: {fileID: 0}

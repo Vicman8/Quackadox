@@ -14,6 +14,8 @@ public class DamagePlayer : MonoBehaviour
     [SerializeField] private float damageCooldown;
     private float damageCountdown;
 
+    [SerializeField] private AudioManager sounds;
+
     void Start()
     {
         playerRB = player.GetComponent<PlayerMovement>().GetRB();
@@ -40,6 +42,7 @@ public class DamagePlayer : MonoBehaviour
         if(collider.gameObject == player)
         {
             Debug.Log("OW!");
+            sounds.Play("Damage");
             //Rigidbody2D playerRB = player.GetComponent<PlayerMovement>().getRB();
             //playerRB.AddForce(player.transform.right + new Vector3(1000f,0f,0f), ForceMode2D.Impulse);
 

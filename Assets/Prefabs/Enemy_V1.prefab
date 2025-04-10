@@ -296,6 +296,7 @@ MonoBehaviour:
   shouldPushPlayer: 1
   Phealth: {fileID: 140342457532025602, guid: ef89d0d536e8bb94e89cb641e3ade159, type: 3}
   damageCooldown: 0.5
+  sounds: {fileID: 0}
 --- !u!1 &6121834885809619180
 GameObject:
   m_ObjectHideFlags: 0
