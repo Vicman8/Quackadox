@@ -14,6 +14,8 @@ public class DamagePlayer : MonoBehaviour
     [SerializeField] private float damageCooldown;
     private float damageCountdown;
 
+    [SerializeField] private AudioManager sounds;
+
     void Start()
     {
         playerRB = player.GetComponent<PlayerMovement>().GetRB();
@@ -40,6 +42,7 @@ public class DamagePlayer : MonoBehaviour
         if(collider.gameObject == player)
         {
             Debug.Log("OW!");
+            sounds.Play("Damage");
             //Rigidbody2D playerRB = player.GetComponent<PlayerMovement>().getRB();
             //playerRB.AddForce(player.transform.right + new Vector3(1000f,0f,0f), ForceMode2D.Impulse);
 
@@ -49,14 +52,14 @@ public class DamagePlayer : MonoBehaviour
                 float movementDirection = player.GetComponent<PlayerMovement>().GetHorizontal();
                 if (movementDirection < 0)
                 {
-                    playerRB.linearVelocity = new Vector3(50f, 0f, 0f);
+                    playerRB.linearVelocity = new Vector3(20f, 0f, 0f);
                     Debug.Log("Movement is negative");
                     Debug.Log(playerRB.linearVelocity);
                     StartCoroutine(ChangeExternalVelocityRight());
                 }
                 else
                 {
-                    playerRB.linearVelocity = new Vector3(-50f, 0f, 0f);
+                    playerRB.linearVelocity = new Vector3(-20f, 0f, 0f);
                     Debug.Log(playerRB.linearVelocity);
                     Debug.Log("Movement is positive or zero");
                     StartCoroutine(ChangeExternalVelocityLeft());
@@ -78,7 +81,7 @@ public class DamagePlayer : MonoBehaviour
     {
         while(playerRB.linearVelocity.x > 0)
         {
-            playerRB.linearVelocity = new Vector3(playerRB.linearVelocity.x - 5f, 0f, 0f);
+            playerRB.linearVelocity = new Vector3(playerRB.linearVelocity.x - 2f, 0f, 0f);
             Debug.Log("Zeroing velocity right");
             Debug.Log(playerRB.linearVelocity);
             yield return null;
@@ -93,7 +96,7 @@ public class DamagePlayer : MonoBehaviour
     {
         while (playerRB.linearVelocity.x < 0)
         {
-            playerRB.linearVelocity = new Vector3(playerRB.linearVelocity.x + 5f, 0f, 0f);
+            playerRB.linearVelocity = new Vector3(playerRB.linearVelocity.x + 2f, 0f, 0f);
             Debug.Log("Zeroing velocity left");
             Debug.Log(playerRB.linearVelocity);
             yield return null;

@@ -6,28 +6,35 @@ public class PlayerMovement : MonoBehaviour
 {
     private Color originalBackgroundColor;
 
+    //Walk sound
+    private float walkSoundToggleTimer = 0f;
+    private bool playHighSound = true;
+
     private float horizontal;
     private float speed = 8f;
     private float jumpPower = 60f;
     private bool isFacingRight = true;
 
     //Dashing
-    private bool canDash = true;
+    private bool canDash = false;
     private bool isDashing;
     private float dashingPower = 5f;
     private float dashingTime = 0.2f;
     private float dashingCooldown = 1f;
 
 
-    [SerializeField] public Rigidbody2D rb;
-
     // Dash Charge System
     private float maxDashCharge = 5f;
     private float currentDashCharge = 5f;
     private float dashRechargeRate = 1f;
 
+    // Level Switching
+    private bool isInAlternateLevel = false;
+    [SerializeField] private Vector2 levelOffset = new Vector2(0f, -100f); // adjust this offset to match distance between levels
+    private Vector2 originalLevelPosition;
 
 
+    [SerializeField] public Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private TrailRenderer tr;
@@ -45,10 +52,12 @@ public class PlayerMovement : MonoBehaviour
     private float platformSpeed;
     private bool playerOnPlatform = false;
 
+    [SerializeField] private AudioManager audioManager;
     void Start()
     {
         // Save the original background color when the game starts
         originalBackgroundColor = Camera.main.backgroundColor;
+        originalLevelPosition = transform.position;
     }
 
 
@@ -74,13 +83,46 @@ public class PlayerMovement : MonoBehaviour
         if (UI.pauseState == 0)
         {
             horizontal = Input.GetAxisRaw("Horizontal");
+
+            // Toggle walking sound
+            if (horizontal != 0)
+            {
+                walkSoundToggleTimer -= Time.deltaTime;
+
+                // Alternate the sound based on a timer or movement
+                if (walkSoundToggleTimer <= 0f)
+                {
+                    if (playHighSound)
+                    {
+                        FindObjectOfType<AudioManager>().Play("WalkHigh");
+                    }
+                    else
+                    {
+                        FindObjectOfType<AudioManager>().Play("WalkLow");
+                    }
+
+                    // Toggle sound
+                    playHighSound = !playHighSound;
+
+                    // Reset the timer to control how fast it alternates (example: every 0.5 seconds)
+                    walkSoundToggleTimer = 0.5f;
+                }
+            }
+            else
+            {
+                // Stop both sounds when not moving
+                walkSoundToggleTimer = 0f;  // Reset timer when player stops moving
+            }
         }
+
 
         // Jumping
         if (Input.GetKeyDown(KeyCode.Space) && IsGrounded() && UI.pauseState == 0)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPower);
             animator.Play("DuckJump");
+            FindObjectOfType<AudioManager>().Play("Jump");
+
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && rb.linearVelocity.y > 0f)
@@ -91,8 +133,11 @@ public class PlayerMovement : MonoBehaviour
         // Trigger dash when Shift key is pressed
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && currentDashCharge > 0)
         {
-            StartCoroutine(PortalDash());
-            animator.Play("DuckDash");
+            if(canDash)
+            {
+                StartCoroutine(PortalDash());
+                animator.Play("DuckDash");
+            }
         }
 
         UpdateAnimationState();
@@ -149,7 +194,7 @@ public class PlayerMovement : MonoBehaviour
 
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0f;
-        rb.linearVelocity = new Vector2(transform.localScale.x * dashingPower, 0f);
+        rb.linearVelocity = Vector2.zero;
         tr.emitting = true;
 
         Vector2 dashDirection = isFacingRight ? Vector2.right : Vector2.left;
@@ -165,11 +210,21 @@ public class PlayerMovement : MonoBehaviour
         Vector2 exitPosition = entryPosition + dashDirection * dashDistance;
         GameObject exitPortal = Instantiate(portalPrefab, exitPosition, Quaternion.identity);
 
+        // Store current position before switch
+        if (!isInAlternateLevel)
+        {
+            originalLevelPosition = transform.position;
+            transform.position = (Vector2)transform.position + levelOffset;
+        }
+        else
+        {
+            transform.position = originalLevelPosition;
+        }
+
+        isInAlternateLevel = !isInAlternateLevel;
+
         // Switch the world after the dash
         SwitchWorld(); // Call world switch method here
-
-        // Teleport player to exit portal
-        transform.position = exitPosition;
 
         yield return new WaitForSeconds(dashingTime);
         tr.emitting = false;
@@ -234,7 +289,7 @@ public class PlayerMovement : MonoBehaviour
         if (Camera.main.backgroundColor == originalBackgroundColor)
         {
             // If it's the original color, switch to the new color (e.g., red)
-            Camera.main.backgroundColor = Color.red;
+            Camera.main.backgroundColor = Color.magenta;
             Debug.Log("World switched to red!");
         }
         else
@@ -249,5 +304,10 @@ public class PlayerMovement : MonoBehaviour
     { 
         playerOnPlatform = isOnPlatform;
         platformSpeed = speed;
+    }
+
+    public void SetDashUnlocked(bool unlocked)
+    {
+        canDash = unlocked;
     }
 }
