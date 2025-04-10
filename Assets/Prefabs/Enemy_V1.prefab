@@ -179,9 +179,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PointA: {fileID: 6600056998972221157}
   PointB: {fileID: 7878101314641872614}
+  ReturnPoint: {fileID: 6121834885809619180}
   speed: 4
   PlayerPoint: {fileID: 0}
   Guarding: 0
+  AtGuardPoint: 0
+  GuardState: 0
 --- !u!1 &4835052154040460988
 GameObject:
   m_ObjectHideFlags: 0
@@ -276,6 +279,37 @@ MonoBehaviour:
   player: {fileID: 0}
   Phealth: {fileID: 0}
   HitBox: {fileID: 4835052154040460988}
+--- !u!1 &6121834885809619180
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4637464351494833978}
+  m_Layer: 0
+  m_Name: ReturnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4637464351494833978
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6121834885809619180}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4806868542447564016}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6600056998972221157
 GameObject:
   m_ObjectHideFlags: 0
@@ -454,5 +488,6 @@ Transform:
   - {fileID: 3691070561851261501}
   - {fileID: 8942120149179246474}
   - {fileID: 7003643435974592066}
+  - {fileID: 4637464351494833978}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
