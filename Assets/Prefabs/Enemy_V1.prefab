@@ -182,9 +182,8 @@ MonoBehaviour:
   ReturnPoint: {fileID: 6121834885809619180}
   speed: 4
   PlayerPoint: {fileID: 0}
-  Guarding: 0
-  AtGuardPoint: 0
   GuardState: 0
+  stopDistance: 0.1
 --- !u!1 &4835052154040460988
 GameObject:
   m_ObjectHideFlags: 0
@@ -212,7 +211,7 @@ Transform:
   m_GameObject: {fileID: 4835052154040460988}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.25, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -262,7 +261,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.5, y: 1.5}
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
 --- !u!114 &8590140500775446829
 MonoBehaviour:
@@ -423,7 +422,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 5554090403924350916}
-  countDown: 0
   Detect: 0
 --- !u!1 &7878101314641872614
 GameObject:
