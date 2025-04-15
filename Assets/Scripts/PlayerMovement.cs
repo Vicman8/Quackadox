@@ -1,5 +1,5 @@
 using System.Collections;
-using UnityEditor.Tilemaps;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -53,6 +53,8 @@ public class PlayerMovement : MonoBehaviour
     private bool playerOnPlatform = false;
 
     [SerializeField] private AudioManager audioManager;
+
+    private bool isJumping = false;
     void Start()
     {
         // Save the original background color when the game starts
@@ -121,6 +123,7 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPower);
             animator.Play("DuckJump");
+            isJumping = true;
             FindObjectOfType<AudioManager>().Play("Jump");
 
         }
@@ -128,6 +131,13 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && rb.linearVelocity.y > 0f)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.5f);
+        }
+
+        // Reset jumping state once grounded
+        if (IsGrounded() && isJumping)
+        {
+            isJumping = false;
+            animator.Play("DuckIdle"); // Return to idle once grounded
         }
 
         // Trigger dash when Shift key is pressed
@@ -271,18 +281,22 @@ public class PlayerMovement : MonoBehaviour
 
     private void UpdateAnimationState()
     {
-        if (!IsGrounded())
+        // Check if the player is in the air (jumping or falling)
+        if (isJumping || rb.linearVelocity.y > 0.1f) // Player is in the air
         {
             animator.Play("DuckJump");
         }
-        else if (horizontal != 0)
+        else if (Mathf.Abs(horizontal) > 0.1f) // Player is moving horizontally
         {
             animator.Play("DuckWalk");
         }
-        else
+        else // Player is not moving horizontally
         {
             animator.Play("DuckIdle");
         }
+
+        // Adjust the "Speed" float parameter in Animator for walking
+        animator.SetFloat("Speed", Mathf.Abs(horizontal) * speed);
     }
 
     public Rigidbody2D GetRB()
