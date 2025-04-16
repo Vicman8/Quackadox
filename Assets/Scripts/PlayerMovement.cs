@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -214,7 +216,6 @@ public class PlayerMovement : MonoBehaviour
         Vector2 dashDirection = isFacingRight ? Vector2.right : Vector2.left;
         float dashDistance = 5f;
         Vector2 entryPosition = (Vector2)transform.position + dashDirection * dashDistance;
-        Vector2 returnExitPosition = (Vector2)transform.position + dashDirection * 1.5f;
 
         // Instantiate entry portal
         GameObject entryPortal = Instantiate(portalPrefab, entryPosition, Quaternion.identity);
@@ -251,46 +252,94 @@ public class PlayerMovement : MonoBehaviour
             TeleportToAlternateWorld();
         }
 
-        // Create exit portal
-        GameObject exitPortal = Instantiate(portalPrefab, returnExitPosition, Quaternion.identity);
-        portalAnimator = exitPortal.GetComponent<Animator>();
-        portalAnimator.Play("Portal");
-
-        // Clean up and finish
+        // Wait a bit before destroying the entry portal
         yield return new WaitForSeconds(dashingTime);
         tr.emitting = false;
         rb.gravityScale = originalGravity;
         isDashing = false;
 
+        // Destroy the entry portal
         Destroy(entryPortal);
-        Destroy(exitPortal);
 
         yield return new WaitForSeconds(dashingCooldown);
         canDash = true;
     }
-
     public void TeleportToAlternateWorld()
     {
-        // Only teleport if we haven't already teleported
         if (!hasTeleported)
         {
             hasTeleported = true;
 
+            // Calculate the position where the exit portal should appear in the new world
+            Vector2 exitPortalPosition;
+            Vector2 playerExitPosition;
+
             if (!isInAlternateLevel)
             {
+                // Going to alternate world
+                exitPortalPosition = (Vector2)transform.position + levelOffset;
+                // Store original position before teleporting
                 originalLevelPosition = transform.position;
-                transform.position = (Vector2)transform.position + levelOffset;
+
+                // Player should appear slightly to the right/left of the exit portal
+                Vector2 exitDirection = isFacingRight ? Vector2.right : Vector2.left;
+                playerExitPosition = exitPortalPosition + exitDirection * 1.5f;
             }
             else
             {
-                transform.position = originalLevelPosition;
+                // Returning to original world
+                exitPortalPosition = originalLevelPosition;
+
+                // Player should appear slightly to the right/left of the exit portal
+                Vector2 exitDirection = isFacingRight ? Vector2.right : Vector2.left;
+                playerExitPosition = exitPortalPosition + exitDirection * 1.5f;
             }
 
+            // Create the exit portal at the destination position
+            GameObject exitPortal = Instantiate(portalPrefab, exitPortalPosition, Quaternion.identity);
+            Animator exitPortalAnimator = exitPortal.GetComponent<Animator>();
+            exitPortalAnimator.Play("Portal");
+
+            // Switch world state
             isInAlternateLevel = !isInAlternateLevel;
+
+            // Start a coroutine to handle the player's emergence from the portal
+            StartCoroutine(EmergeThroughPortal(playerExitPosition, exitPortal));
 
             // Switch world colors or background
             SwitchWorld();
         }
+    }
+
+    private IEnumerator EmergeThroughPortal(Vector2 playerExitPosition, GameObject exitPortal)
+    {
+        // First teleport player to exit portal position
+        transform.position = exitPortal.transform.position;
+
+        // Give the portal a moment to be visible
+        yield return new WaitForSeconds(0.2f);
+
+        // Move player out from the portal
+        float emergeTime = 0.3f;
+        float emergeTimer = 0;
+        Vector2 startPos = transform.position;
+
+        // Play player emerge animation if you have one
+        // animator.Play("EmergingAnimation");
+
+        while (emergeTimer < emergeTime)
+        {
+            transform.position = Vector2.Lerp(startPos, playerExitPosition, emergeTimer / emergeTime);
+            emergeTimer += Time.deltaTime;
+            yield return null;
+        }
+
+        // Ensure player ends at the exact destination
+        transform.position = playerExitPosition;
+
+        // Destroy the exit portal after a short delay
+        yield return new WaitForSeconds(0.5f);
+        Destroy(exitPortal);
     }
 
     private void UpdateAnimationState()
