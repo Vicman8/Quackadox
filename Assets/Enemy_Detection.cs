@@ -19,7 +19,7 @@ public class Enemy_Detection : MonoBehaviour
     public void Update()
     {
         //this will change the status of the enemy when the player has been seen
-        Debug.Log("countDown: " + countDown);
+        //Debug.Log("countDown: " + countDown);
         
         //this is when the player lost the player. it will start to count down until the enemy has to go back to it position
         if (!Detect && countDown > 0)
