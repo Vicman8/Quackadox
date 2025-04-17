@@ -6,6 +6,8 @@ public class DamagePlayer : MonoBehaviour
     [SerializeField] private GameObject player;
     public Rigidbody2D playerRB;
     [SerializeField] private bool shouldPushPlayer;
+    [SerializeField] private float knockbackPower;
+    [SerializeField] private bool isPitfall;
 
     //brian's addition for UI testing
     public TEMP_Player_Health Phealth;
@@ -15,12 +17,17 @@ public class DamagePlayer : MonoBehaviour
     private float damageCountdown;
 
     [SerializeField] private AudioManager sounds;
+    [SerializeField] private CheckpointManager checkpoints;
 
     void Start()
     {
         playerRB = player.GetComponent<PlayerMovement>().GetRB();
         playerDamaged = false;
         damageCountdown = 0;
+        if(shouldPushPlayer && knockbackPower == 0)
+        {
+            knockbackPower = 20;
+        }
     }
 
     void Update()
@@ -43,8 +50,6 @@ public class DamagePlayer : MonoBehaviour
         {
             Debug.Log("OW!");
             sounds.Play("Damage");
-            //Rigidbody2D playerRB = player.GetComponent<PlayerMovement>().getRB();
-            //playerRB.AddForce(player.transform.right + new Vector3(1000f,0f,0f), ForceMode2D.Impulse);
 
             if(shouldPushPlayer)
             {
@@ -52,23 +57,28 @@ public class DamagePlayer : MonoBehaviour
                 float movementDirection = player.GetComponent<PlayerMovement>().GetHorizontal();
                 if (movementDirection < 0)
                 {
-                    playerRB.linearVelocity = new Vector3(20f, 0f, 0f);
+                    playerRB.linearVelocity = new Vector3(knockbackPower, 0f, 0f);
                     Debug.Log("Movement is negative");
                     Debug.Log(playerRB.linearVelocity);
                     StartCoroutine(ChangeExternalVelocityRight());
                 }
                 else
                 {
-                    playerRB.linearVelocity = new Vector3(-20f, 0f, 0f);
+                    playerRB.linearVelocity = new Vector3(-knockbackPower, 0f, 0f);
                     Debug.Log(playerRB.linearVelocity);
                     Debug.Log("Movement is positive or zero");
                     StartCoroutine(ChangeExternalVelocityLeft());
                 }
             }
-                Phealth.Damaged();
-                Debug.Log("Take damage");
-                playerDamaged = true;
-                damageCountdown = damageCooldown;
+            else if(isPitfall && Phealth.health > 0)
+            {
+                checkpoints.RespawnPlayerAtCheckpoint();
+            }
+
+            Phealth.Damaged();
+            Debug.Log("Take damage");
+            playerDamaged = true;
+            damageCountdown = damageCooldown;
         }
     }
 
@@ -76,7 +86,7 @@ public class DamagePlayer : MonoBehaviour
     {
         while(playerRB.linearVelocity.x > 0)
         {
-            playerRB.linearVelocity = new Vector3(playerRB.linearVelocity.x - 2f, 0f, 0f);
+            playerRB.linearVelocity = new Vector3(playerRB.linearVelocity.x - knockbackPower/10, 0f, 0f);
             Debug.Log("Zeroing velocity right");
             Debug.Log(playerRB.linearVelocity);
             yield return null;
@@ -91,7 +101,7 @@ public class DamagePlayer : MonoBehaviour
     {
         while (playerRB.linearVelocity.x < 0)
         {
-            playerRB.linearVelocity = new Vector3(playerRB.linearVelocity.x + 2f, 0f, 0f);
+            playerRB.linearVelocity = new Vector3(playerRB.linearVelocity.x + knockbackPower/10, 0f, 0f);
             Debug.Log("Zeroing velocity left");
             Debug.Log(playerRB.linearVelocity);
             yield return null;

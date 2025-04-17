@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 369638075358227626}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0339, y: -0.355, z: 0}
+  m_LocalPosition: {x: -0.135, y: -0.355, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 2562071351081573431}
   - component: {fileID: 5385628446936643520}
   - component: {fileID: 1605697829708738289}
-  - component: {fileID: 1348829344541835012}
+  - component: {fileID: 1010053057472987016}
   - component: {fileID: 3044108320599702515}
   - component: {fileID: 8197817490085138289}
   - component: {fileID: 1919494491845681878}
@@ -139,6 +139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85dbe362cf5b1494bb156a527cb62ec5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelOffset: {x: 0, y: -100}
   rb: {fileID: 3044108320599702515}
   groundCheck: {fileID: 1445025939047553271}
   groundLayer:
@@ -146,9 +147,10 @@ MonoBehaviour:
     m_Bits: 64
   tr: {fileID: 1919494491845681878}
   animator: {fileID: 6065563041183863104}
-  portalPrefab: {fileID: 4527202700755663203, guid: 9e075ca43b11ec04ab9cea7aa9c46575, type: 3}
+  portalPrefab: {fileID: 5934010862133257390, guid: 254496405c99d124bbacb55c911eec94, type: 3}
   UI: {fileID: 0}
---- !u!61 &1348829344541835012
+  audioManager: {fileID: 0}
+--- !u!61 &1010053057472987016
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -182,7 +184,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.0017927289, y: 0.0018325895}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -192,7 +194,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.6836561, y: 0.74287117}
+  m_Size: {x: 0.65625, y: 0.71875}
   m_EdgeRadius: 0
 --- !u!50 &3044108320599702515
 Rigidbody2D:
@@ -233,7 +235,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfba7bde98aca574783273bb7b958251, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackPrefab: {fileID: 0}
+  attackPrefab: {fileID: 4071212603389749711, guid: bb41f26feb29025458d821dda6f4836a, type: 3}
   attackSpeed: 10
   attackLifetime: 1
 --- !u!96 &1919494491845681878

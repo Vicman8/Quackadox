@@ -132,15 +132,18 @@ public class TEMP_Player_Health : MonoBehaviour
 
     public void ResetHealth()
     {
-        health = maxHealth;
-
-        // Reset all heart sprites
-        for (int i = 0; i < maxHealth; i++)
+        if(health <= 0)
         {
-            T_Health[i].sprite = hHealth;
-        }
+            health = maxHealth;
 
-        isRespawning = false;
-        Debug.Log("Health reset to " + health);
+            // Reset all heart sprites
+            for (int i = 0; i < maxHealth; i++)
+            {
+                T_Health[i].sprite = hHealth;
+            }
+
+            isRespawning = false;
+            Debug.Log("Health reset to " + health);
+        }
     }
 }

@@ -89,7 +89,7 @@ public class CheckpointManager : MonoBehaviour
     }
 
     // Respawn player at last checkpoint
-    private void RespawnPlayerAtCheckpoint()
+    public void RespawnPlayerAtCheckpoint()
     {
         if (player != null)
         {

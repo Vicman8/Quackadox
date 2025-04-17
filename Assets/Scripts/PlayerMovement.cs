@@ -302,6 +302,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void SetPushed(bool pushed)
     {
+        Debug.Log("pushed set to: " + pushed);
         isBeingPushed = pushed;
     }
 
