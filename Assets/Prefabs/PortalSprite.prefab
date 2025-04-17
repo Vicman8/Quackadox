@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4991907331920063255}
   - component: {fileID: 5248163206287697065}
   - component: {fileID: 2428173934656804774}
+  - component: {fileID: -2906636673405839095}
   m_Layer: 0
   m_Name: PortalSprite
   m_TagString: Untagged
@@ -141,10 +142,22 @@ CapsuleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: -0.109078296, y: -0.0034711373}
   m_Size: {x: 0.22778952, y: 0.6939359}
   m_Direction: 0
+--- !u!114 &-2906636673405839095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5934010862133257390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 950d9a4da8702a84589f221628cfe00a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
