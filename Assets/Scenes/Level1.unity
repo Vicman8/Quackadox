@@ -28204,7 +28204,7 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 1c2ca327ccaf12341970c38c4bd399ce, type: 2}
     - target: {fileID: 6065563041183863104, guid: ef89d0d536e8bb94e89cb641e3ade159, type: 3}
       propertyPath: m_ApplyRootMotion
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8197817490085138289, guid: ef89d0d536e8bb94e89cb641e3ade159, type: 3}
       propertyPath: attackPrefab
