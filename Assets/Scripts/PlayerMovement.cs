@@ -126,7 +126,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && IsGrounded() && UI.pauseState == 0)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPower);
-            animator.SetBool("IsJumping", true); // Let the Animator handle it
+            animator.SetBool("IsJumping", true);
             isJumping = true;
             FindObjectOfType<AudioManager>().Play("Jump");
         }
@@ -137,11 +137,11 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Reset jumping state once grounded
-if (IsGrounded() && isJumping)
-{
-    isJumping = false;
-    animator.SetBool("IsJumping", false); // Go back to idle/walk naturally
-}
+        if (IsGrounded() && isJumping)
+        {
+            isJumping = false;
+            animator.SetBool("IsJumping", false); // Go back to idle/walk naturally
+        }
 
         // Trigger dash when Shift key is pressed
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && currentDashCharge > 0)
@@ -402,7 +402,15 @@ if (IsGrounded() && isJumping)
     {
         if (animator != null)
         {
-            animator.Play("DuckQuack");
+            animator.SetBool("IsQuacking", true);
+        }
+    }
+
+    public void StopDuckQuackAnimation()
+    {
+        if (animator != null)
+        {
+            animator.SetBool("IsQuacking", false);
         }
     }
 
