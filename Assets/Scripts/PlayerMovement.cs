@@ -53,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isBeingPushed = false;
     private float dashRechargeCooldownTimer = 0f;
     private float platformSpeed;
-    private bool playerOnPlatform = false;
+    public bool playerOnPlatform = false;
 
     [SerializeField] private AudioManager audioManager;
 
