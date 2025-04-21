@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
 
@@ -9,63 +11,66 @@ public class PlayerAttack : MonoBehaviour
 
     private int attackIndex = 0; // Keep track of how many attacks we've shot
 
-    // Update is called once per frame
+    private PlayerMovement playerMovement;
+
+    void Start()
+    {
+        playerMovement = GetComponent<PlayerMovement>();
+    }
+
     void Update()
     {
-
         if (Input.GetMouseButtonDown(1))
         {
             Debug.Log("Long Range Attack");
 
-            PlayerMovement playerMovement = GetComponent<PlayerMovement>();
             if (playerMovement != null)
             {
-                playerMovement.PlayDuckQuackAnimation();
+                playerMovement.PlayDuckQuackAnimation(); // Set bool true
                 Debug.Log("AnimationQuack");
+
+                // Stop animation after a delay (match the animation duration)
+                StartCoroutine(StopQuackAfterDelay(0.5f)); // Adjust 0.5f to match your animation length
             }
+
             PerformLongRangeAttack();
         }
-        
+    }
+
+    IEnumerator StopQuackAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        if (playerMovement != null)
+        {
+            playerMovement.StopDuckQuackAnimation(); // Set bool false
+        }
     }
 
     void PerformLongRangeAttack()
     {
-        // Reset the attack counter before starting the sequence
         attackIndex = 0;
-
-        // Loop to shoot out 3 projectiles (or attacks) one after the other
         ShootAttackWithDelay();
     }
 
     void ShootAttackWithDelay()
     {
-        // Ensure we only shoot 3 attacks
         if (attackIndex < 3)
         {
-            // Instantiate the attack prefab at the player's position
             GameObject attack = Instantiate(attackPrefab, transform.position, Quaternion.identity);
 
-            // Get the player's facing direction
             Vector3 direction = transform.localScale.x > 0 ? Vector3.right : Vector3.left;
+            direction += new Vector3(attackIndex * 0.2f, 0, 0);
 
-            // Apply an offset for each shot to slightly space out the projectiles
-            direction += new Vector3(attackIndex * 0.2f, 0, 0); // Slight offset for each attack
-
-            // Set the attack's velocity or direction
             Rigidbody2D rb = attack.GetComponent<Rigidbody2D>();
             if (rb != null)
             {
                 rb.linearVelocity = direction * attackSpeed;
             }
 
-            // Destroy the attack after its lifetime
             Destroy(attack, attackLifetime);
-
-            // Increment the attackIndex to prepare for the next attack
             attackIndex++;
 
-            // Call the method again after a delay for the next attack
-            Invoke(nameof(ShootAttackWithDelay), 0.2f); // Delay between each attack
+            Invoke(nameof(ShootAttackWithDelay), 0.2f);
         }
     }
 }

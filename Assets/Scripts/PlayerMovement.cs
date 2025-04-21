@@ -60,6 +60,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isJumping = false;
     void Start()
     {
+
         // Save the original background color when the game starts
         originalBackgroundColor = Camera.main.backgroundColor;
         originalLevelPosition = transform.position;
@@ -125,10 +126,9 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && IsGrounded() && UI.pauseState == 0)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPower);
-            animator.Play("DuckJump");
+            animator.SetBool("IsJumping", true);
             isJumping = true;
             FindObjectOfType<AudioManager>().Play("Jump");
-
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && rb.linearVelocity.y > 0f)
@@ -140,7 +140,7 @@ public class PlayerMovement : MonoBehaviour
         if (IsGrounded() && isJumping)
         {
             isJumping = false;
-            animator.Play("DuckIdle"); // Return to idle once grounded
+            animator.SetBool("IsJumping", false); // Go back to idle/walk naturally
         }
 
         // Trigger dash when Shift key is pressed
@@ -343,22 +343,38 @@ public class PlayerMovement : MonoBehaviour
 
     private void UpdateAnimationState()
     {
-        // Check if the player is in the air (jumping or falling)
-        if (isJumping || rb.linearVelocity.y > 0.1f) // Player is in the air
-        {
-            animator.Play("DuckJump");
-        }
-        else if (Mathf.Abs(horizontal) > 0.1f) // Player is moving horizontally
-        {
-            animator.Play("DuckWalk");
-        }
-        else // Player is not moving horizontally
-        {
-            animator.Play("DuckIdle");
-        }
 
-        // Adjust the "Speed" float parameter in Animator for walking
-        animator.SetFloat("Speed", Mathf.Abs(horizontal) * speed);
+        // Log current animator state
+        var state = animator.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0);
+        Debug.Log("Current animation: " + state.fullPathHash);
+
+        // Log hash comparison (for example usage)
+        int jumpHash = Animator.StringToHash("Base Layer.Jump");
+        Debug.Log("Hash for Base Layer.Jump: " + jumpHash);
+
+        // Log SpriteRenderer info
+        var sr = GetComponent<SpriteRenderer>();
+        Debug.Log("Color: " + sr.color + " | FlipX: " + sr.flipX + " | Sprite: " + sr.sprite);
+
+            // Check if the player is in the air (jumping or falling)
+            if (isJumping || rb.linearVelocity.y > 0.1f) // Player is in the air
+            {
+                animator.SetBool("IsJumping", true);
+            }
+            else
+            {
+                animator.SetBool("IsJumping", false);
+            }
+
+            // Check if the player is moving horizontally
+            if (Mathf.Abs(horizontal) > 0.1f)
+            {
+                animator.SetFloat("Speed", Mathf.Abs(horizontal) * speed); // Moving
+            }
+            else
+            {
+                animator.SetFloat("Speed", 0f); // Idle
+            }
     }
 
     public Rigidbody2D GetRB()
@@ -386,7 +402,15 @@ public class PlayerMovement : MonoBehaviour
     {
         if (animator != null)
         {
-            animator.Play("DuckQuack");
+            animator.SetBool("IsQuacking", true);
+        }
+    }
+
+    public void StopDuckQuackAnimation()
+    {
+        if (animator != null)
+        {
+            animator.SetBool("IsQuacking", false);
         }
     }
 
