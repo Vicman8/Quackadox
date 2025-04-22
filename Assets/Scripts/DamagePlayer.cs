@@ -111,4 +111,5 @@ public class DamagePlayer : MonoBehaviour
 
         yield return new WaitForSeconds(1.0f);
     }
+
 }
