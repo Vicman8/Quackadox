@@ -1,31 +1,25 @@
 fileFormatVersion: 2
-guid: f13fab6c297261d4182bb8cf98a90c08
+guid: 2ef41c2d83ec8de40a77a6007f2f8457
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6019165035227885997
-    second: Duck Running Sprite Sheet_0
+      213: -4340001346902734884
+    second: Enemy_Quackadox_Attacking Sprite Sheet_0
   - first:
-      213: 6870849750468544119
-    second: Duck Running Sprite Sheet_1
+      213: 4197259012304255569
+    second: Enemy_Quackadox_Attacking Sprite Sheet_1
   - first:
-      213: -238022083412673233
-    second: Duck Running Sprite Sheet_2
+      213: -2644831215704880064
+    second: Enemy_Quackadox_Attacking Sprite Sheet_2
   - first:
-      213: -3980555996087890931
-    second: Duck Running Sprite Sheet_3
+      213: -7241722193269695911
+    second: Enemy_Quackadox_Attacking Sprite Sheet_3
   - first:
-      213: 236046324812205070
-    second: Duck Running Sprite Sheet_4
+      213: 6146673913473347282
+    second: Enemy_Quackadox_Attacking Sprite Sheet_4
   - first:
-      213: -3883935863702083517
-    second: Duck Running Sprite Sheet_5
-  - first:
-      213: -6989689816304799101
-    second: Duck Running Sprite Sheet_6
-  - first:
-      213: -4790806885590834478
-    second: Duck Running Sprite Sheet_7
+      213: 4291363181522544484
+    second: Enemy_Quackadox_Attacking Sprite Sheet_5
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -118,10 +112,10 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
-    buildTarget: WebGL
+    buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: 4
+    textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
@@ -131,10 +125,10 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
-    buildTarget: Android
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: 4
+    textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
@@ -147,7 +141,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Duck Running Sprite Sheet_0
+      name: Enemy_Quackadox_Attacking Sprite Sheet_0
       rect:
         serializedVersion: 2
         x: 0
@@ -162,14 +156,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 35e4ac69a41a77ca0800000000000000
-      internalID: -6019165035227885997
+      spriteID: cd74521f4c735c3c0800000000000000
+      internalID: -4340001346902734884
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Duck Running Sprite Sheet_1
+      name: Enemy_Quackadox_Attacking Sprite Sheet_1
       rect:
         serializedVersion: 2
         x: 32
@@ -184,14 +178,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 77642c9d1792a5f50800000000000000
-      internalID: 6870849750468544119
+      spriteID: 15ab3ba65d8af3a30800000000000000
+      internalID: 4197259012304255569
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Duck Running Sprite Sheet_2
+      name: Enemy_Quackadox_Attacking Sprite Sheet_2
       rect:
         serializedVersion: 2
         x: 64
@@ -206,14 +200,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f2d3d7d1d2062bcf0800000000000000
-      internalID: -238022083412673233
+      spriteID: 04ccb01b50cab4bd0800000000000000
+      internalID: -2644831215704880064
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Duck Running Sprite Sheet_3
+      name: Enemy_Quackadox_Attacking Sprite Sheet_3
       rect:
         serializedVersion: 2
         x: 96
@@ -228,14 +222,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d0c41a4596932c8c0800000000000000
-      internalID: -3980555996087890931
+      spriteID: 95ad814980c308b90800000000000000
+      internalID: -7241722193269695911
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Duck Running Sprite Sheet_4
+      name: Enemy_Quackadox_Attacking Sprite Sheet_4
       rect:
         serializedVersion: 2
         x: 128
@@ -250,14 +244,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e0cc7fcb1ea964300800000000000000
-      internalID: 236046324812205070
+      spriteID: 2de2dba9b5f5d4550800000000000000
+      internalID: 6146673913473347282
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Duck Running Sprite Sheet_5
+      name: Enemy_Quackadox_Attacking Sprite Sheet_5
       rect:
         serializedVersion: 2
         x: 160
@@ -272,52 +266,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 34823a1f8ec791ac0800000000000000
-      internalID: -3883935863702083517
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Duck Running Sprite Sheet_6
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 382bcf02522affe90800000000000000
-      internalID: -6989689816304799101
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Duck Running Sprite Sheet_7
-      rect:
-        serializedVersion: 2
-        x: 224
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 2d2ecd43582a38db0800000000000000
-      internalID: -4790806885590834478
+      spriteID: 46767d4b31cfd8b30800000000000000
+      internalID: 4291363181522544484
       vertices: []
       indices: 
       edges: []
@@ -326,7 +276,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: cfb3147485ef46d4ba1bc32446ba93bd
+    spriteID: 606980b954e19824798ec64eb952e22b
     internalID: 0
     vertices: []
     indices: 
@@ -336,14 +286,12 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Duck Running Sprite Sheet_0: -6019165035227885997
-      Duck Running Sprite Sheet_1: 6870849750468544119
-      Duck Running Sprite Sheet_2: -238022083412673233
-      Duck Running Sprite Sheet_3: -3980555996087890931
-      Duck Running Sprite Sheet_4: 236046324812205070
-      Duck Running Sprite Sheet_5: -3883935863702083517
-      Duck Running Sprite Sheet_6: -6989689816304799101
-      Duck Running Sprite Sheet_7: -4790806885590834478
+      Enemy_Quackadox_Attacking Sprite Sheet_0: -4340001346902734884
+      Enemy_Quackadox_Attacking Sprite Sheet_1: 4197259012304255569
+      Enemy_Quackadox_Attacking Sprite Sheet_2: -2644831215704880064
+      Enemy_Quackadox_Attacking Sprite Sheet_3: -7241722193269695911
+      Enemy_Quackadox_Attacking Sprite Sheet_4: 6146673913473347282
+      Enemy_Quackadox_Attacking Sprite Sheet_5: 4291363181522544484
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
