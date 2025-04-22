@@ -26767,6 +26767,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Water
       objectReference: {fileID: 0}
+    - target: {fileID: 8072930785242536558, guid: 06105592cb0b4b94192f0d51a4985ee1, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1851542591}
+    - target: {fileID: 8072930785242536558, guid: 06105592cb0b4b94192f0d51a4985ee1, type: 3}
+      propertyPath: sounds
+      value: 
+      objectReference: {fileID: 1487908299}
+    - target: {fileID: 8072930785242536558, guid: 06105592cb0b4b94192f0d51a4985ee1, type: 3}
+      propertyPath: Phealth
+      value: 
+      objectReference: {fileID: 1851542600}
+    - target: {fileID: 8072930785242536558, guid: 06105592cb0b4b94192f0d51a4985ee1, type: 3}
+      propertyPath: checkpoints
+      value: 
+      objectReference: {fileID: 827158713}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
